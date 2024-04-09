@@ -6,7 +6,7 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          www.logisticsone.pe under construcion Get started by appstogo S.A.S.
+          www.logisticsone.pe under construction Get started by appstogo S.A.S.
         </p>
       </div>
     </main>
