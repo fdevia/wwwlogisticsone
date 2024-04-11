@@ -21,7 +21,7 @@ export default function Home() {
   const [x1] = useState(700);
   const [y1] = useState(300);
   const [x2] = useState(500);
-  const [y2] = useState(350);
+  const [y2] = useState(450);
   const [x3] = useState(2100);
   const [y3] = useState(250);
   const areas = [
