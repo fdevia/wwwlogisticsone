@@ -13,8 +13,8 @@ export default function Home() {
   const [currentDesktopImageHeight, setCurrentDesktopImageHeight] = useState(0);
 
   useEffect(() => {
-    setCurrentWindowWidth(Math.min(window.innerWidth, width));
-    setCurrentWindowHeight(Math.min(window.innerHeight, height));
+    setCurrentWindowWidth(width);
+    setCurrentWindowHeight(height);
   }, [width, height]);
 
   useEffect(() => {
