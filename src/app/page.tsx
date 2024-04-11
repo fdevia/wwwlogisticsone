@@ -20,7 +20,7 @@ export default function Home() {
   const [showDesktopGlobo03, setShowDesktopGlobo03] = useState(false);
   const [x1] = useState(700);
   const [y1] = useState(300);
-  const [x2] = useState(500);
+  const [x2] = useState(600);
   const [y2] = useState(450);
   const [x3] = useState(2100);
   const [y3] = useState(250);
@@ -193,7 +193,7 @@ export default function Home() {
             }}
           >
             <label className="white-label">
-              Products information goes heare
+              Products information goes here
             </label>
             {/*
             <Image
