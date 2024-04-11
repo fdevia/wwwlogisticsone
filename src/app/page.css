@@ -1,3 +1,6 @@
 .area-border:hover {
   cursor: pointer;
 }
+.white-label {
+  color: white;
+}

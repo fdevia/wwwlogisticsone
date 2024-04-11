@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
+import Label from "@mui/material";
+import Modal from "@mui/material/Modal";
 
 import "./page.css";
 
@@ -18,7 +20,8 @@ export default function Home() {
   const [showDesktopGlobo03, setShowDesktopGlobo03] = useState(false);
   const [x1] = useState(700);
   const [y1] = useState(300);
-
+  const [x2] = useState(500);
+  const [y2] = useState(350);
   const [x3] = useState(2100);
   const [y3] = useState(250);
   const areas = [
@@ -38,7 +41,7 @@ export default function Home() {
     },
     {
       id: "area2",
-      coords: "700,200,890,400",
+      coords: "1000,400,1700,700",
       onMouseLeave: () => {
         console.log("mouseLeave area2");
         setShowDesktopGlobo02(false);
@@ -168,6 +171,39 @@ export default function Home() {
               height={height / 3}
               //style={{ width: "auto", height: "auto" }}
             />
+          </Box>
+        </Box>
+      )}
+      {desktopImageLoaded && showDesktopGlobo02 && (
+        <Box
+          sx={{
+            position: "absolute",
+            transform: "translate(-50%, -50%)",
+            left: convertXPixels(width, x2),
+            top: convertYPixels(height, y2),
+            zIndex: 2,
+          }}
+        >
+          <Box
+            sx={{
+              border: "2px solid red",
+              width: 800,
+              height: 600,
+              backgroundColor: "#E72F49",
+            }}
+          >
+            <label className="white-label">
+              Products information goes heare
+            </label>
+            {/*
+            <Image
+              src="/images/desktopGlobo02.png"
+              alt="desktopGlobo02"
+              width={width / 5}
+              height={height / 3}
+              //style={{ width: "auto", height: "auto" }}
+            />
+        */}
           </Box>
         </Box>
       )}
