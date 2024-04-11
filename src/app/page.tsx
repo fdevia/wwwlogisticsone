@@ -15,8 +15,12 @@ export default function Home() {
   const [currentDesktopImageHeight, setCurrentDesktopImageHeight] = useState(0);
   const [showDesktopGlobo01, setShowDesktopGlobo01] = useState(false);
   const [showDesktopGlobo02, setShowDesktopGlobo02] = useState(false);
+  const [showDesktopGlobo03, setShowDesktopGlobo03] = useState(false);
   const [x1] = useState(700);
   const [y1] = useState(300);
+
+  const [x3] = useState(2100);
+  const [y3] = useState(250);
   const areas = [
     {
       id: "area1",
@@ -48,7 +52,15 @@ export default function Home() {
 
     {
       id: "area3",
-      coords: "2100,680,2240,810",
+      coords: "2000,480,2240,810",
+      onMouseLeave: () => {
+        console.log("mouseLeave area2");
+        setShowDesktopGlobo03(false);
+      },
+      onMouseOver: () => {
+        console.log("mouseOver area2");
+        setShowDesktopGlobo03(true);
+      },
       onClick: () => {
         console.log("onClick area7");
         window.location.href = "https://wa.me/message/JUCLGSNQQNWND1";
@@ -148,10 +160,31 @@ export default function Home() {
             zIndex: 2,
           }}
         >
-          <Box className="boxGlobo01">
+          <Box>
             <Image
               src="/images/desktopGlobo01.png"
-              alt="globo01"
+              alt="desktopGlobo01"
+              width={width / 5}
+              height={height / 3}
+              //style={{ width: "auto", height: "auto" }}
+            />
+          </Box>
+        </Box>
+      )}
+      {desktopImageLoaded && showDesktopGlobo03 && (
+        <Box
+          sx={{
+            position: "absolute",
+            transform: "translate(-50%, -50%)",
+            left: convertXPixels(width, x3),
+            top: convertYPixels(height, y3),
+            zIndex: 2,
+          }}
+        >
+          <Box>
+            <Image
+              src="/images/desktopGlobo03.png"
+              alt="desktopGlobo03"
               width={width / 5}
               height={height / 3}
               //style={{ width: "auto", height: "auto" }}
