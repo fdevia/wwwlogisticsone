@@ -4,6 +4,8 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
 
+import "./page.css";
+
 export default function Home() {
   const { width, height } = useWindowSize();
   const [desktopImageLoaded, setDesktopImageLoaded] = useState(false);
@@ -18,8 +20,8 @@ export default function Home() {
   const areas = [
     {
       id: "area1",
-      //coords: "370,250,550,450",
-      coords: "300,500,850,1000",
+      //coords: "370,250,550,350",
+      coords: "220,500,850,900",
       onMouseLeave: () => {
         console.log("onMouseLeave área1");
         setShowDesktopGlobo01(false);
