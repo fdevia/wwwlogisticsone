@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Box } from "@mui/material";
+import { Box, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
 import Label from "@mui/material";
@@ -42,13 +42,16 @@ export default function Home() {
     {
       id: "area2",
       coords: "1000,400,1700,700",
+      /*
       onMouseLeave: () => {
         console.log("mouseLeave area2");
         setShowDesktopGlobo02(false);
-      },
+      },*/
       onMouseOver: () => {
         console.log("mouseOver area2");
-        setShowDesktopGlobo02(true);
+        if (!showDesktopGlobo02) {
+          setShowDesktopGlobo02(true);
+        }
       },
       className: "area-border",
     },
@@ -195,6 +198,24 @@ export default function Home() {
             <label className="white-label">
               Products information goes here
             </label>
+            <label className="white-label">
+              Products information goes here
+            </label>
+            <label className="white-label">
+              Products information goes here
+            </label>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              //value={leftAdd}
+              //onChange={handleChangeLeftAdd}
+              defaultValue="10"
+              label="ADD"
+            >
+              <MenuItem value={10}>Golosinas</MenuItem>
+              <MenuItem value={20}>Limpieza</MenuItem>
+              <MenuItem value={30}>Mascotas</MenuItem>
+            </Select>
             {/*
             <Image
               src="/images/desktopGlobo02.png"
