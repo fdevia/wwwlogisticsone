@@ -1,12 +1,43 @@
 "use client";
 import Image from "next/image";
-import { Box, MenuItem, Select } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  MenuItem,
+  Select,
+  TextField,
+  ThemeProvider,
+  Typography,
+  makeStyles,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
 import Label from "@mui/material";
 import Modal from "@mui/material/Modal";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
+import ThemeLogisticsOne from "./theme";
 import "./page.css";
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const optionsMarca = [
+  { marca: "Mabels" },
+  { marca: "Angelitos" },
+  { marca: "Gummies" },
+  { marca: "Candies Suppliers" },
+];
+
+const optionsCategoria = [
+  { categoria: "Wafer" },
+  { categoria: "Galleta" },
+  { categoria: "Marshmallows" },
+  { categoria: "Gomitas" },
+  { categoria: "Dulces" },
+];
 
 export default function Home() {
   const { width, height } = useWindowSize();
@@ -102,6 +133,22 @@ export default function Home() {
   const convertXPixels = (value: number, x: number) => (value * x) / 2400;
   const convertYPixels = (value: number, y: number) => (value * y) / 1148;
 
+  const handleCloseProductos = () => setShowDesktopGlobo02(false);
+
+  const onTagsChangeMarca = () => {
+    console.log("wwww ");
+    //console.log(values);
+    /*
+    cartCtx.setCurrentPage(9);
+    if (values.length > 0) {
+      cartCtx.setCurrentPage(1);
+      cartCtx.changeFilterMarca(values);
+    } else {
+      cartCtx.changeFilterMarca([]);
+      console.log("No filter");
+    }*/
+  };
+
   return (
     <>
       {/*
@@ -184,38 +231,122 @@ export default function Home() {
             transform: "translate(-50%, -50%)",
             left: convertXPixels(width, x2),
             top: convertYPixels(height, y2),
-            zIndex: 2,
+            width: 800,
+            height: 800,
+            backgroundColor: "#E72F49",
+            //zIndex: 2,
           }}
         >
-          <Box
-            sx={{
-              border: "2px solid red",
-              width: 800,
-              height: 600,
-              backgroundColor: "#E72F49",
-            }}
-          >
-            <label className="white-label">
-              Products information goes here
-            </label>
-            <label className="white-label">
-              Products information goes here
-            </label>
-            <label className="white-label">
-              Products information goes here
-            </label>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              //value={leftAdd}
-              //onChange={handleChangeLeftAdd}
-              defaultValue="10"
-              label="ADD"
+          <ThemeProvider theme={ThemeLogisticsOne}>
+            <Box
+              sx={{
+                //border: "1px solid white",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignContent: "flex-end",
+                //marginTop: "2%",
+              }}
             >
-              <MenuItem value={10}>Golosinas</MenuItem>
-              <MenuItem value={20}>Limpieza</MenuItem>
-              <MenuItem value={30}>Mascotas</MenuItem>
-            </Select>
+              <Button
+                sx={{
+                  width: "50px",
+                  marginTop: "1%",
+                  //marginRight: "2%",
+                  //border: "1px solid blue",
+                }}
+                onClick={handleCloseProductos}
+              >
+                <img className="imgX" src={"/images/x.png"} alt="x" />
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <Typography variant="h1">
+                <div className="whiteColorText">Productos</div>
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: "2%",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <Autocomplete
+                //multiple
+                id="checkboxes-tags-demo"
+                options={optionsCategoria}
+                //disableCloseOnSelect
+                getOptionLabel={(option) => option.categoria}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.categoria}
+                  </li>
+                )}
+                style={{ width: 200, marginRight: "20%" }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Categorias"
+                    placeholder="Categoria"
+                  />
+                )}
+              />
+              <Autocomplete
+                //multiple
+                id="checkboxes-tags-demo"
+                options={optionsMarca}
+                //disableCloseOnSelect
+                getOptionLabel={(option) => option.marca}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.marca}
+                  </li>
+                )}
+                style={{ width: 200, color: "blue" }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Marcas" placeholder="Marca" />
+                )}
+              />
+            </Box>
+            {/*
+              <label className="white-label">
+                Products information goes here
+              </label>
+              <label className="white-label">
+                Products information goes here
+              </label>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                //value={leftAdd}
+                //onChange={handleChangeLeftAdd}
+                defaultValue="10"
+                label="ADD"
+              >
+                <MenuItem value={10}>Golosinas</MenuItem>
+                <MenuItem value={20}>Limpieza</MenuItem>
+                <MenuItem value={30}>Mascotas</MenuItem>
+              </Select>
+              */}
             {/*
             <Image
               src="/images/desktopGlobo02.png"
@@ -225,7 +356,7 @@ export default function Home() {
               //style={{ width: "auto", height: "auto" }}
             />
         */}
-          </Box>
+          </ThemeProvider>
         </Box>
       )}
       {desktopImageLoaded && showDesktopGlobo03 && (
