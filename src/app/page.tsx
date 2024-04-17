@@ -243,6 +243,8 @@ export default function Home() {
             top: convertYPixels(height, y2),
             width: 800,
             height: 800,
+            borderRadius: 6,
+            //border: "solid white 10px",
             //backgroundColor: "#F0324C",
             backgroundColor: "#2F3042",
             //backgroundColor: "gray",
