@@ -1,14 +1,30 @@
 import { createTheme } from "@mui/material";
+import { Roboto, Pacifico } from "next/font/google";
+//import localFont from "@next/font/local";
+/*
+const pacificoFont = Pacifico({
+  weight: "400",
+  display: "swap",
+  subsets: ["latin"],
+});
+*/
+
+const robotoFont = Roboto({
+  weight: "400",
+  display: "swap",
+  subsets: ["latin"],
+});
 
 const ThemeLogisticsOne = createTheme({
   palette: {
     primary: {
-      main: "#009dd6",
+      main: "#F0324C",
       dark: "#0069a7",
       contrastText: "#fff",
+      light: "white",
     },
     secondary: {
-      main: "#88bc00",
+      main: "#2F3042",
       dark: "#5a9400",
       contrastText: "#fff",
     },
@@ -18,7 +34,7 @@ const ThemeLogisticsOne = createTheme({
   },
   typography: {
     body1: {
-      fontFamily: "Roboto",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "450",
       fontSize: "15px",
       color: "red",
@@ -28,7 +44,7 @@ const ThemeLogisticsOne = createTheme({
     },
 
     body2: {
-      fontFamily: "Roboto",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "400",
       fontSize: "11px",
       color: "#757575",
@@ -36,7 +52,7 @@ const ThemeLogisticsOne = createTheme({
     },
 
     subtitle1: {
-      fontFamily: "Roboto",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "450",
       fontSize: "18px",
       color: "#000000",
@@ -45,7 +61,7 @@ const ThemeLogisticsOne = createTheme({
     },
 
     subtitle2: {
-      fontFamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "400",
       fontSize: "12px",
       color: "#757575",
@@ -54,7 +70,7 @@ const ThemeLogisticsOne = createTheme({
     },
 
     h1: {
-      fontfamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: 800,
       fontSize: "28px",
       verticalAlign: "center",
@@ -64,31 +80,22 @@ const ThemeLogisticsOne = createTheme({
     },
 
     h2: {
-      fontFamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "600",
       fontSize: "22px",
       align: "Center",
     },
 
     h3: {
-      fontFamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "600",
       fontSize: "22px",
       align: "Center",
       color: "#7f8989",
     },
 
-    /*
-      h3: {
-        fontFamily: "Hind",
-        fontWeight: "700",
-        fontSize: "50px",
-        color: "#757575",
-        lineHeight: 1.0,
-      },*/
-
     h4: {
-      fontFamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "400",
       fontSize: "18px",
       align: "Center",
@@ -96,7 +103,7 @@ const ThemeLogisticsOne = createTheme({
     },
 
     h5: {
-      fontFamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       fontWeight: "400",
       fontSize: "21px",
       align: "left",
@@ -104,7 +111,7 @@ const ThemeLogisticsOne = createTheme({
     },
 
     h6: {
-      fontFamily: "Roboto Condensed",
+      fontFamily: robotoFont.style.fontFamily,
       lineHeight: 1.2,
       fontWeight: "400",
       fontSize: "17px",
@@ -114,7 +121,7 @@ const ThemeLogisticsOne = createTheme({
 
     button: {
       width: 190,
-      fontfamily: "Roboto",
+      fontfamily: robotoFont.style.fontFamily,
       fontWeight: 400,
       fontSize: "10px",
       verticalAlign: "center",

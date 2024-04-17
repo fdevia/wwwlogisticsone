@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Autocomplete,
@@ -10,9 +11,8 @@ import {
   TextField,
   ThemeProvider,
   Typography,
-  makeStyles,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+
 import { useWindowSize } from "react-use";
 import Label from "@mui/material";
 import Modal from "@mui/material/Modal";
@@ -21,22 +21,22 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import ThemeLogisticsOne from "./theme";
 import "./page.css";
+import { blue, red } from "@mui/material/colors";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-const optionsMarca = [
-  { marca: "Mabels" },
-  { marca: "Angelitos" },
-  { marca: "Gummies" },
-  { marca: "Candies Suppliers" },
+
+const optionsBrands = [
+  { brand: "Mabels" },
+  { brand: "Angelitos" },
+  { brand: "Gummies" },
+  { brand: "Candies Suppliers" },
 ];
 
-const optionsCategoria = [
-  { categoria: "Wafer" },
-  { categoria: "Galleta" },
-  { categoria: "Marshmallows" },
-  { categoria: "Gomitas" },
-  { categoria: "Dulces" },
+const optionsCategories = [
+  { categorie: "Confiteria" },
+  { categorie: "Limpieza" },
+  { categorie: "Mascotas" },
 ];
 
 export default function Home() {
@@ -55,6 +55,7 @@ export default function Home() {
   const [y2] = useState(550);
   const [x3] = useState(2100);
   const [y3] = useState(250);
+
   const areas = [
     {
       id: "area1",
@@ -135,18 +136,27 @@ export default function Home() {
 
   const handleCloseProductos = () => setShowDesktopGlobo02(false);
 
-  const onTagsChangeMarca = () => {
-    console.log("wwww ");
-    //console.log(values);
+  const onTagsChangeCategorie = (event: any, values: any) => {
+    console.log(event + values);
     /*
-    cartCtx.setCurrentPage(9);
     if (values.length > 0) {
-      cartCtx.setCurrentPage(1);
-      cartCtx.changeFilterMarca(values);
+      cartCtx.changeFilterGenero(values);
     } else {
-      cartCtx.changeFilterMarca([]);
-      console.log("No filter");
+      cartCtx.changeFilterGenero([]);
+      console.log("No filter onTagsChangeGenero");
     }*/
+  };
+
+  const onTagsChangeBrand = (event: any, values: any) => {
+    console.log(event + values);
+    /*
+    if (values.length > 0) {
+      cartCtx.changeFilterGenero(values);
+    } else {
+      cartCtx.changeFilterGenero([]);
+      console.log("No filter onTagsChangeGenero");
+    }
+    */
   };
 
   return (
@@ -233,7 +243,9 @@ export default function Home() {
             top: convertYPixels(height, y2),
             width: 800,
             height: 800,
-            backgroundColor: "#E72F49",
+            //backgroundColor: "#F0324C",
+            backgroundColor: "#2F3042",
+            //backgroundColor: "gray",
             //zIndex: 2,
           }}
         >
@@ -279,83 +291,88 @@ export default function Home() {
               }}
             >
               <Autocomplete
-                //multiple
-                id="checkboxes-tags-demo"
-                options={optionsCategoria}
-                //disableCloseOnSelect
-                getOptionLabel={(option) => option.categoria}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.categoria}
-                  </li>
-                )}
-                style={{ width: 200, marginRight: "20%" }}
+                onChange={onTagsChangeCategorie}
+                options={optionsCategories}
+                getOptionLabel={(option) => option.categorie}
+                style={{ width: 200, marginRight: "14%", marginTop: "4%" }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Categorias"
-                    placeholder="Categoria"
+                    sx={{
+                      "& .MuiOutlinedInput-input": {
+                        fontSize: 20,
+                        color: ThemeLogisticsOne.palette.primary.main,
+                        backgroundColor: "white",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "white",
+                      },
+                    }}
+                    label="Categoria"
+                    placeholder="Categorias"
+                    size="small"
+                    variant="outlined"
+                    InputProps={{
+                      ...params.InputProps,
+                      disableUnderline: true,
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        //overflow: "hidden",
+                        width: "100%",
+                        color: ThemeLogisticsOne.palette.primary.main,
+                        fontSize: 20,
+                        fontFamily: "Roboto",
+                        fontWeight: 900,
+                      },
+                    }}
                   />
                 )}
               />
               <Autocomplete
-                //multiple
-                id="checkboxes-tags-demo"
-                options={optionsMarca}
-                //disableCloseOnSelect
-                getOptionLabel={(option) => option.marca}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.marca}
-                  </li>
-                )}
-                style={{ width: 200, color: "blue" }}
+                onChange={onTagsChangeBrand}
+                options={optionsBrands}
+                getOptionLabel={(option) => option.brand}
+                style={{ width: 200, marginTop: "4%" }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Marcas" placeholder="Marca" />
+                  <TextField
+                    {...params}
+                    sx={{
+                      "& .MuiOutlinedInput-input": {
+                        fontSize: 20,
+                        color: ThemeLogisticsOne.palette.primary.main,
+                        backgroundColor: "white",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "white",
+                      },
+                    }}
+                    label="Marcas"
+                    placeholder="Marca"
+                    size="small"
+                    variant="outlined"
+                    InputProps={{
+                      ...params.InputProps,
+                      disableUnderline: true,
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        //overflow: "hidden",
+                        width: "100%",
+                        color: ThemeLogisticsOne.palette.primary.main,
+                        fontSize: 20,
+                        fontFamily: "Roboto",
+                        fontWeight: 900,
+                      },
+                    }}
+                  />
                 )}
               />
             </Box>
-            {/*
-              <label className="white-label">
-                Products information goes here
-              </label>
-              <label className="white-label">
-                Products information goes here
-              </label>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                //value={leftAdd}
-                //onChange={handleChangeLeftAdd}
-                defaultValue="10"
-                label="ADD"
-              >
-                <MenuItem value={10}>Golosinas</MenuItem>
-                <MenuItem value={20}>Limpieza</MenuItem>
-                <MenuItem value={30}>Mascotas</MenuItem>
-              </Select>
-              */}
-            {/*
-            <Image
-              src="/images/desktopGlobo02.png"
-              alt="desktopGlobo02"
-              width={width / 5}
-              height={height / 3}
-              //style={{ width: "auto", height: "auto" }}
-            />
-        */}
           </ThemeProvider>
         </Box>
       )}
