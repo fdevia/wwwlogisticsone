@@ -1,30 +1,30 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
 import {
   Autocomplete,
   Box,
   Button,
-  Checkbox,
-  MenuItem,
-  Select,
   TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
-
 import { useWindowSize } from "react-use";
-import Label from "@mui/material";
-import Modal from "@mui/material/Modal";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-
 import ThemeLogisticsOne from "./theme";
 import "./page.css";
-import { blue, red } from "@mui/material/colors";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const robotoFont = Roboto({
+  weight: "400",
+  display: "swap",
+  subsets: ["latin"],
+});
+
+const robotoFont1 = Roboto({
+  weight: "400",
+  display: "swap",
+  subsets: ["latin"],
+});
 
 const optionsBrands = [
   { brand: "Mabels" },
@@ -44,8 +44,6 @@ export default function Home() {
   const [desktopImageLoaded, setDesktopImageLoaded] = useState(false);
   const [currentWindowWidth, setCurrentWindowWidth] = useState(0);
   const [currentWindowHeight, setCurrentWindowHeight] = useState(0);
-  const [currentDesktopImageWidth, setCurrentDesktopImageWidth] = useState(0);
-  const [currentDesktopImageHeight, setCurrentDesktopImageHeight] = useState(0);
   const [showDesktopGlobo01, setShowDesktopGlobo01] = useState(false);
   const [showDesktopGlobo02, setShowDesktopGlobo02] = useState(false);
   const [showDesktopGlobo03, setShowDesktopGlobo03] = useState(false);
@@ -59,7 +57,6 @@ export default function Home() {
   const areas = [
     {
       id: "area1",
-      //coords: "370,250,550,350",
       coords: "220,500,850,900",
       onMouseLeave: () => {
         console.log("onMouseLeave área1");
@@ -74,11 +71,6 @@ export default function Home() {
     {
       id: "area2",
       coords: "1000,400,1700,700",
-      /*
-      onMouseLeave: () => {
-        console.log("mouseLeave area2");
-        setShowDesktopGlobo02(false);
-      },*/
       onMouseOver: () => {
         console.log("mouseOver area2");
         if (!showDesktopGlobo02) {
@@ -117,8 +109,6 @@ export default function Home() {
     img.src = "/images/wwwlogisticsone.png";
     img.onload = () => {
       setDesktopImageLoaded(true);
-      setCurrentDesktopImageWidth(img.width);
-      setCurrentDesktopImageHeight(img.height);
     };
     img.onerror = () => {
       console.error("Failed to load image:", "/images/wwwlogisticsone.png");
@@ -137,7 +127,7 @@ export default function Home() {
   const handleCloseProductos = () => setShowDesktopGlobo02(false);
 
   const onTagsChangeCategorie = (event: any, values: any) => {
-    console.log(event + values);
+    console.log(values.length);
     /*
     if (values.length > 0) {
       cartCtx.changeFilterGenero(values);
@@ -147,8 +137,13 @@ export default function Home() {
     }*/
   };
 
-  const onTagsChangeBrand = (event: any, values: any) => {
-    console.log(event + values);
+  function onTagsChangeBrand(e: any, newItem: any) {
+    alert("wwwww");
+    console.log(newItem);
+  }
+
+  const onTagsChangeBrand2 = (event: any, value: any) => {
+    console.log(value.length);
     /*
     if (values.length > 0) {
       cartCtx.changeFilterGenero(values);
@@ -184,7 +179,7 @@ export default function Home() {
           <Image
             alt="wwwlogisticsone"
             src="/images/wwwlogisticsone.png"
-            objectFit="cover"
+            //objectFit="cover"
             width={currentWindowWidth}
             height={currentWindowHeight}
             priority
@@ -305,6 +300,7 @@ export default function Home() {
                         fontSize: 20,
                         color: ThemeLogisticsOne.palette.primary.main,
                         backgroundColor: "white",
+                        fontFamily: robotoFont,
                       },
                       "& .MuiOutlinedInput-root": {
                         backgroundColor: "white",
@@ -316,7 +312,6 @@ export default function Home() {
                     variant="outlined"
                     InputProps={{
                       ...params.InputProps,
-                      disableUnderline: true,
                     }}
                     InputLabelProps={{
                       style: {
@@ -326,7 +321,7 @@ export default function Home() {
                         width: "100%",
                         color: ThemeLogisticsOne.palette.primary.main,
                         fontSize: 20,
-                        fontFamily: "Roboto",
+                        //fontFamily: "Roboto",
                         fontWeight: 900,
                       },
                     }}
@@ -346,6 +341,7 @@ export default function Home() {
                         fontSize: 20,
                         color: ThemeLogisticsOne.palette.primary.main,
                         backgroundColor: "white",
+                        fontFamily: robotoFont,
                       },
                       "& .MuiOutlinedInput-root": {
                         backgroundColor: "white",
@@ -357,7 +353,6 @@ export default function Home() {
                     variant="outlined"
                     InputProps={{
                       ...params.InputProps,
-                      disableUnderline: true,
                     }}
                     InputLabelProps={{
                       style: {
@@ -367,7 +362,7 @@ export default function Home() {
                         width: "100%",
                         color: ThemeLogisticsOne.palette.primary.main,
                         fontSize: 20,
-                        fontFamily: "Roboto",
+                        //fontFamily: "Pacifico",
                         fontWeight: 900,
                       },
                     }}
