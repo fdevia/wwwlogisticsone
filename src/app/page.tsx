@@ -27,16 +27,41 @@ const robotoFont1 = Roboto({
 });
 
 const optionsBrands = [
-  { brand: "Mabels" },
-  { brand: "Angelitos" },
-  { brand: "Gummies" },
-  { brand: "Candies Suppliers" },
+  { brand: "Mabel'S" },
+  { brand: "Fiesta MINI MINI" },
+  { brand: "ANILLO mix" },
+  { brand: "Gelatina MINI MINI" },
+  { brand: "CHICLE TATTOO" },
+  { brand: "MINI SUPER KIDS" },
+  { brand: "MINI Princesa" },
+  { brand: "MINI DINO" },
+  { brand: "MINI ZOO" },
+  { brand: "MINI AVIONCITO" },
+  { brand: "MINI CAR" },
+  { brand: "NATIVO" },
+  { brand: "BLÜ" },
+  { brand: "El Secreto De La Abueilita" },
+  { brand: "Suite" },
+  { brand: "Olimpo" },
+  { brand: "BelleKiss" },
+  { brand: "Co Patitas" },
+  { brand: "Gelatina MINI MINI" },
 ];
 
 const optionsCategories = [
-  { categorie: "Confiteria" },
-  { categorie: "Limpieza" },
-  { categorie: "Mascotas" },
+  { categorie: "WAFER" },
+  { categorie: "MARSHMALLOWS" },
+  { categorie: "CHUPETIN LED" },
+  { categorie: "MINI GELATINA" },
+  { categorie: "CHICLE" },
+  { categorie: "HUEVOS SORPRESA" },
+  { categorie: "GELATINA" },
+  { categorie: "DETERGENTE" },
+  { categorie: "SUAVIZANTE" },
+  { categorie: "LIMPIATODO" },
+  { categorie: "CUCARACHICIDA" },
+  { categorie: "JABON LIQUIDO" },
+  { categorie: "ARENA SANITARIA" },
 ];
 
 export default function Home() {
@@ -291,7 +316,7 @@ export default function Home() {
                 onChange={onTagsChangeCategorie}
                 options={optionsCategories}
                 getOptionLabel={(option) => option.categorie}
-                style={{ width: 200, marginRight: "14%", marginTop: "4%" }}
+                style={{ width: 300, marginRight: "14%", marginTop: "4%" }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -332,7 +357,7 @@ export default function Home() {
                 onChange={onTagsChangeBrand}
                 options={optionsBrands}
                 getOptionLabel={(option) => option.brand}
-                style={{ width: 200, marginTop: "4%" }}
+                style={{ width: 300, marginTop: "4%" }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -347,8 +372,8 @@ export default function Home() {
                         backgroundColor: "white",
                       },
                     }}
-                    label="Marcas"
-                    placeholder="Marca"
+                    label="Marca"
+                    placeholder="Marcas"
                     size="small"
                     variant="outlined"
                     InputProps={{
