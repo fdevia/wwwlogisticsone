@@ -157,7 +157,7 @@ export default function Home() {
 
   const onTagsChangeCategorie = (
     event: React.SyntheticEvent<Element, Event>,
-    newValue: { id: "string"; categorie: string } | null
+    newValue: { id: string; categorie: string } | null
   ) => {
     if (newValue) {
       alert(newValue.id + " " + newValue.categorie);
@@ -167,7 +167,7 @@ export default function Home() {
 
   const onTagsChangeBrand = (
     event: React.SyntheticEvent<Element, Event>,
-    newValue: { id: "string"; brand: string } | null
+    newValue: { id: string; brand: string } | null
   ) => {
     if (newValue) {
       alert(newValue.id + " " + newValue.brand);
