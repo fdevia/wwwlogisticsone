@@ -67,7 +67,7 @@ const optionsCategories = [
 
 export default function Home() {
   const { width, height } = useWindowSize();
-  const [desktopImageLoaded, setDesktopImageLoaded] = useState(false);
+  const [desktopImageLoaded] = useState(true);
   const [currentWindowWidth, setCurrentWindowWidth] = useState(0);
   const [currentWindowHeight, setCurrentWindowHeight] = useState(0);
   const [showDesktopGlobo01, setShowDesktopGlobo01] = useState(false);
@@ -132,7 +132,7 @@ export default function Home() {
     setCurrentWindowWidth(width);
     setCurrentWindowHeight(height);
   }, [width, height]);
-
+  /*
   useEffect(() => {
     const img = document.createElement("img");
     img.src = "/images/wwwlogisticsone.png";
@@ -144,7 +144,7 @@ export default function Home() {
       setDesktopImageLoaded(false);
     };
   }, []);
-
+*/
   const convertWithPixels = (value: number, total: number) =>
     (total * value) / 2400;
   const convertHeightPixels = (value: number, total: number) =>
@@ -298,7 +298,7 @@ export default function Home() {
                 }}
                 onClick={handleCloseProductos}
               >
-                <img className="imgX" src={"/images/x.png"} alt="x" />
+                <Image className="imgX" src={"/images/x.png"} alt="x" />
               </Button>
             </Box>
             <Box
