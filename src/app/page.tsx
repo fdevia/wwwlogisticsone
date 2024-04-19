@@ -27,42 +27,42 @@ const robotoFont1 = Roboto({
 });
 
 const optionsBrands = [
-  { brand: "Mabel'S" },
-  { brand: "Fiesta Mini Mini" },
-  { brand: "Anillo Mix" },
-  { brand: "Gelatina Mini Mini" },
-  { brand: "Chicle Tattoo" },
-  { brand: "Mini Super Kids" },
-  { brand: "Mini Princesa" },
-  { brand: "Mini Dino" },
-  { brand: "Mini Zoo" },
-  { brand: "Mini Avioncito" },
-  { brand: "Mini Car" },
-  { brand: "Nativo" },
-  { brand: "Blü" },
-  { brand: "EPA" },
-  { brand: "El Secreto De La Abueilita" },
-  { brand: "Solei" },
-  { brand: "Suite" },
-  { brand: "Olimpo" },
-  { brand: "Bellkiss" },
-  { brand: "CoPatitas" },
+  { id: "0001", brand: "Mabel'S" },
+  { id: "0002", brand: "Fiesta Mini Mini" },
+  { id: "0003", brand: "Anillo Mix" },
+  { id: "0004", brand: "Gelatina Mini Mini" },
+  { id: "0005", brand: "Chicle Tattoo" },
+  { id: "0006", brand: "Mini Super Kids" },
+  { id: "0007", brand: "Mini Princesa" },
+  { id: "0008", brand: "Mini Dino" },
+  { id: "0009", brand: "Mini Zoo" },
+  { id: "0010", brand: "Mini Avioncito" },
+  { id: "0011", brand: "Mini Car" },
+  { id: "0012", brand: "Nativo" },
+  { id: "0013", brand: "Blü" },
+  { id: "0014", brand: "EPA" },
+  { id: "0015", brand: "El Secreto De La Abueilita" },
+  { id: "0016", brand: "Solei" },
+  { id: "0017", brand: "Suite" },
+  { id: "0018", brand: "Olimpo" },
+  { id: "0019", brand: "Bellkiss" },
+  { id: "0020", brand: "CoPatitas" },
 ];
 
 const optionsCategories = [
-  { categorie: "WAFER" },
-  { categorie: "MARSHMALLOWS" },
-  { categorie: "CHUPETIN LED" },
-  { categorie: "MINI GELATINA" },
-  { categorie: "CHICLE" },
-  { categorie: "HUEVOS SORPRESA" },
-  { categorie: "GELATINA" },
-  { categorie: "DETERGENTE" },
-  { categorie: "SUAVIZANTE" },
-  { categorie: "LIMPIATODO" },
-  { categorie: "CUCARACHICIDA" },
-  { categorie: "JABON LIQUIDO" },
-  { categorie: "ARENA SANITARIA" },
+  { id: "0001", categorie: "WAFER" },
+  { id: "0002", categorie: "MARSHMALLOWS" },
+  { id: "0003", categorie: "CHUPETIN LED" },
+  { id: "0004", categorie: "MINI GELATINA" },
+  { id: "0005", categorie: "CHICLE" },
+  { id: "0006", categorie: "HUEVOS SORPRESA" },
+  { id: "0007", categorie: "GELATINA" },
+  { id: "0008", categorie: "DETERGENTE" },
+  { id: "0009", categorie: "SUAVIZANTE" },
+  { id: "0010", categorie: "LIMPIATODO" },
+  { id: "0011", categorie: "CUCARACHICIDA" },
+  { id: "0012", categorie: "JABON LIQUIDO" },
+  { id: "0013", categorie: "ARENA SANITARIA" },
 ];
 
 export default function Home() {
@@ -79,6 +79,9 @@ export default function Home() {
   const [y2] = useState(550);
   const [x3] = useState(2100);
   const [y3] = useState(250);
+  const [value, setValue] = useState<string | null>(
+    optionsCategories[0].categorie
+  );
 
   const areas = [
     {
@@ -152,21 +155,25 @@ export default function Home() {
 
   const handleCloseProductos = () => setShowDesktopGlobo02(false);
 
-  const onTagsChangeCategorie = (event: any, values: any) => {
-    console.log(values.length);
-    /*
-    if (values.length > 0) {
-      cartCtx.changeFilterGenero(values);
-    } else {
-      cartCtx.changeFilterGenero([]);
-      console.log("No filter onTagsChangeGenero");
-    }*/
+  const onTagsChangeCategorie = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: { id: "string"; categorie: string } | null
+  ) => {
+    if (newValue) {
+      alert(newValue.id + " " + newValue.categorie);
+      console.log(newValue.categorie);
+    }
   };
 
-  function onTagsChangeBrand(e: any, newItem: any) {
-    alert("wwwww");
-    console.log(newItem);
-  }
+  const onTagsChangeBrand = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: { id: "string"; brand: string } | null
+  ) => {
+    if (newValue) {
+      alert(newValue.id + " " + newValue.brand);
+      console.log(newValue.brand);
+    }
+  };
 
   const onTagsChangeBrand2 = (event: any, value: any) => {
     console.log(value.length);
@@ -313,88 +320,92 @@ export default function Home() {
                 alignContent: "center",
               }}
             >
-              <Autocomplete
-                onChange={onTagsChangeCategorie}
-                options={optionsCategories}
-                getOptionLabel={(option) => option.categorie}
-                style={{ width: 300, marginRight: "14%", marginTop: "4%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    sx={{
-                      "& .MuiOutlinedInput-input": {
-                        fontSize: 20,
-                        color: ThemeLogisticsOne.palette.primary.main,
-                        backgroundColor: "white",
-                        fontFamily: robotoFont,
-                      },
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "white",
-                      },
-                    }}
-                    label="Categoria"
-                    placeholder="Categorias"
-                    size="small"
-                    variant="outlined"
-                    InputProps={{
-                      ...params.InputProps,
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        //overflow: "hidden",
-                        width: "100%",
-                        color: ThemeLogisticsOne.palette.primary.main,
-                        fontSize: 20,
-                        //fontFamily: "Roboto",
-                        fontWeight: 900,
-                      },
-                    }}
-                  />
-                )}
-              />
-              <Autocomplete
-                onChange={onTagsChangeBrand}
-                options={optionsBrands}
-                getOptionLabel={(option) => option.brand}
-                style={{ width: 300, marginTop: "4%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    sx={{
-                      "& .MuiOutlinedInput-input": {
-                        fontSize: 20,
-                        color: ThemeLogisticsOne.palette.primary.main,
-                        backgroundColor: "white",
-                        fontFamily: robotoFont,
-                      },
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "white",
-                      },
-                    }}
-                    label="Marca"
-                    placeholder="Marcas"
-                    size="small"
-                    variant="outlined"
-                    InputProps={{
-                      ...params.InputProps,
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        //overflow: "hidden",
-                        width: "100%",
-                        color: ThemeLogisticsOne.palette.primary.main,
-                        fontSize: 20,
-                        //fontFamily: "Pacifico",
-                        fontWeight: 900,
-                      },
-                    }}
-                  />
-                )}
-              />
+              <Box>
+                <Autocomplete
+                  onChange={onTagsChangeCategorie}
+                  options={optionsCategories}
+                  getOptionLabel={(option) => option.categorie}
+                  style={{ width: 300, marginRight: "14%", marginTop: "4%" }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      sx={{
+                        "& .MuiOutlinedInput-input": {
+                          fontSize: 20,
+                          color: ThemeLogisticsOne.palette.primary.main,
+                          backgroundColor: "white",
+                          fontFamily: robotoFont,
+                        },
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: "white",
+                        },
+                      }}
+                      label="Categoria"
+                      placeholder="Categorias"
+                      size="small"
+                      variant="outlined"
+                      InputProps={{
+                        ...params.InputProps,
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          //overflow: "hidden",
+                          width: "100%",
+                          color: ThemeLogisticsOne.palette.primary.main,
+                          fontSize: 20,
+                          //fontFamily: "Roboto",
+                          fontWeight: 900,
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+              <Box>
+                <Autocomplete
+                  onChange={onTagsChangeBrand}
+                  options={optionsBrands}
+                  getOptionLabel={(option) => option.brand}
+                  style={{ width: 300, marginTop: "4%" }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      sx={{
+                        "& .MuiOutlinedInput-input": {
+                          fontSize: 20,
+                          color: ThemeLogisticsOne.palette.primary.main,
+                          backgroundColor: "white",
+                          fontFamily: robotoFont,
+                        },
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: "white",
+                        },
+                      }}
+                      label="Marca"
+                      placeholder="Marcas"
+                      size="small"
+                      variant="outlined"
+                      InputProps={{
+                        ...params.InputProps,
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          //overflow: "hidden",
+                          width: "100%",
+                          color: ThemeLogisticsOne.palette.primary.main,
+                          fontSize: 20,
+                          //fontFamily: "Pacifico",
+                          fontWeight: 900,
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
             </Box>
           </ThemeProvider>
         </Box>
