@@ -9,9 +9,9 @@ import { ProductContext } from "./ProductContext";
 import { Products } from "./products";
 import "./page.css";
 import { log } from "console";
-import { AppProps } from "next/app";
+//import { AppProps } from "next/app";
 
-const Home: React.FC<AppProps> = ({ Component, pageProps }) => {
+const Home: React.FC = () => {
   const {
     cardId,
     updateProducts,

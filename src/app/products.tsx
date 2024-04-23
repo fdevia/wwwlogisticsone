@@ -320,8 +320,8 @@ const Products: React.FC = () => {
           </Box>
           <Box sx={{ marginLeft: "12%", marginTop: "2%", minHeight: "550px" }}>
             {filteredProducts.map((item, index) => (
-              <div>
-                <div key={index}>
+              <div key={index}>
+                <div>
                   <img
                     width="200px"
                     height="auto"
