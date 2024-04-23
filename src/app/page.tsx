@@ -1,77 +1,30 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Roboto } from "next/font/google";
 import Image from "next/image";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  TextField,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useWindowSize } from "react-use";
-import ThemeLogisticsOne from "./theme";
+
+import { ProductContext } from "./ProductContext";
+import { Products } from "./products";
 import "./page.css";
+import { log } from "console";
+import { AppProps } from "next/app";
 
-const robotoFont = Roboto({
-  weight: "400",
-  display: "swap",
-  subsets: ["latin"],
-});
-
-const robotoFont1 = Roboto({
-  weight: "400",
-  display: "swap",
-  subsets: ["latin"],
-});
-
-const optionsBrands = [
-  { id: "0001", brand: "Mabel'S" },
-  { id: "0002", brand: "Fiesta Mini Mini" },
-  { id: "0003", brand: "Anillo Mix" },
-  { id: "0004", brand: "Gelatina Mini Mini" },
-  { id: "0005", brand: "Chicle Tattoo" },
-  { id: "0006", brand: "Mini Super Kids" },
-  { id: "0007", brand: "Mini Princesa" },
-  { id: "0008", brand: "Mini Dino" },
-  { id: "0009", brand: "Mini Zoo" },
-  { id: "0010", brand: "Mini Avioncito" },
-  { id: "0011", brand: "Mini Car" },
-  { id: "0012", brand: "Nativo" },
-  { id: "0013", brand: "Blü" },
-  { id: "0014", brand: "EPA" },
-  { id: "0015", brand: "El Secreto De La Abueilita" },
-  { id: "0016", brand: "Solei" },
-  { id: "0017", brand: "Suite" },
-  { id: "0018", brand: "Olimpo" },
-  { id: "0019", brand: "Bellkiss" },
-  { id: "0020", brand: "CoPatitas" },
-];
-
-const optionsCategories = [
-  { id: "0001", categorie: "WAFER" },
-  { id: "0002", categorie: "MARSHMALLOWS" },
-  { id: "0003", categorie: "CHUPETIN LED" },
-  { id: "0004", categorie: "MINI GELATINA" },
-  { id: "0005", categorie: "CHICLE" },
-  { id: "0006", categorie: "HUEVOS SORPRESA" },
-  { id: "0007", categorie: "GELATINA" },
-  { id: "0008", categorie: "DETERGENTE" },
-  { id: "0009", categorie: "SUAVIZANTE" },
-  { id: "0010", categorie: "LIMPIATODO" },
-  { id: "0011", categorie: "CUCARACHICIDA" },
-  { id: "0012", categorie: "JABON LIQUIDO" },
-  { id: "0013", categorie: "ARENA SANITARIA" },
-];
-
-export default function Home() {
+const Home: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const {
+    cardId,
+    updateProducts,
+    updateCardId,
+    showDesktopGlobo02,
+    updateShowDesktopGlobo02,
+  } = useContext(ProductContext);
   const { width, height } = useWindowSize();
   const [desktopImageLoaded] = useState(true);
   const [currentWindowWidth, setCurrentWindowWidth] = useState(0);
   const [currentWindowHeight, setCurrentWindowHeight] = useState(0);
   const [showDesktopGlobo01, setShowDesktopGlobo01] = useState(false);
-  const [showDesktopGlobo02, setShowDesktopGlobo02] = useState(false);
+  //const [showDesktopGlobo02, setShowDesktopGlobo02] = useState(false);
   const [showDesktopGlobo03, setShowDesktopGlobo03] = useState(false);
   const [x1] = useState(700);
   const [y1] = useState(300);
@@ -79,9 +32,6 @@ export default function Home() {
   const [y2] = useState(550);
   const [x3] = useState(2100);
   const [y3] = useState(250);
-  const [value, setValue] = useState<string | null>(
-    optionsCategories[0].categorie
-  );
 
   const areas = [
     {
@@ -100,10 +50,12 @@ export default function Home() {
     {
       id: "area2",
       coords: "1000,400,1700,700",
-      onMouseOver: () => {
-        console.log("mouseOver area2");
+      onMouseOver: async () => {
+        console.log("mouseOver area2 " + showDesktopGlobo02);
         if (!showDesktopGlobo02) {
-          setShowDesktopGlobo02(true);
+          console.log("ingreso onOver");
+          updateShowDesktopGlobo02(true);
+          //setShowDesktopGlobo02(true);
         }
       },
       className: "area-border",
@@ -113,38 +65,45 @@ export default function Home() {
       id: "area3",
       coords: "2000,480,2240,810",
       onMouseLeave: () => {
-        console.log("mouseLeave area2");
+        console.log("mouseLeave area3");
         setShowDesktopGlobo03(false);
       },
       onMouseOver: () => {
-        console.log("mouseOver area2");
+        console.log("mouseOver area3");
         setShowDesktopGlobo03(true);
       },
       onClick: () => {
-        console.log("onClick area7");
+        console.log("onClick area3");
         window.location.href = "https://wa.me/message/JUCLGSNQQNWND1";
       },
       className: "area-border",
     },
   ];
+  /*
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Llamar a updateCardId para actualizar el cardId
+      } catch (error) {
+        console.error("Error al actualizar el cardId:", error);
+      }
+    };
+
+    fetchData(); // Call fetchData on component mount
+  }, []);
+*/
 
   useEffect(() => {
     setCurrentWindowWidth(width);
     setCurrentWindowHeight(height);
   }, [width, height]);
-  /*
+
   useEffect(() => {
-    const img = document.createElement("img");
-    img.src = "/images/wwwlogisticsone.png";
-    img.onload = () => {
-      setDesktopImageLoaded(true);
-    };
-    img.onerror = () => {
-      console.error("Failed to load image:", "/images/wwwlogisticsone.png");
-      setDesktopImageLoaded(false);
-    };
+    (async () => {
+      await updateProducts();
+    })();
   }, []);
-*/
+
   const convertWithPixels = (value: number, total: number) =>
     (total * value) / 2400;
   const convertHeightPixels = (value: number, total: number) =>
@@ -153,7 +112,7 @@ export default function Home() {
   const convertXPixels = (value: number, x: number) => (value * x) / 2400;
   const convertYPixels = (value: number, y: number) => (value * y) / 1148;
 
-  const handleCloseProductos = () => setShowDesktopGlobo02(false);
+  //const handleCloseProductos = () => setShowDesktopGlobo02(false);
 
   const onTagsChangeCategorie = (
     event: React.SyntheticEvent<Element, Event>,
@@ -175,16 +134,9 @@ export default function Home() {
     }
   };
 
-  const onTagsChangeBrand2 = (event: any, value: any) => {
-    console.log(value.length);
-    /*
-    if (values.length > 0) {
-      cartCtx.changeFilterGenero(values);
-    } else {
-      cartCtx.changeFilterGenero([]);
-      console.log("No filter onTagsChangeGenero");
-    }
-    */
+  const handleButtonOnClick = async () => {
+    console.log("ingreso");
+    await updateCardId("1018505033");
   };
 
   return (
@@ -262,154 +214,7 @@ export default function Home() {
           </Box>
         </Box>
       )}
-      {desktopImageLoaded && showDesktopGlobo02 && (
-        <Box
-          sx={{
-            position: "absolute",
-            transform: "translate(-50%, -50%)",
-            left: convertXPixels(width, x2),
-            top: convertYPixels(height, y2),
-            width: 800,
-            height: 800,
-            borderRadius: 6,
-            //border: "solid white 10px",
-            //backgroundColor: "#F0324C",
-            backgroundColor: "#2F3042",
-            //backgroundColor: "gray",
-            //zIndex: 2,
-          }}
-        >
-          <ThemeProvider theme={ThemeLogisticsOne}>
-            <Box
-              sx={{
-                //border: "1px solid white",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignContent: "flex-end",
-                //marginTop: "2%",
-              }}
-            >
-              <Button
-                sx={{
-                  width: "50px",
-                  marginTop: "1%",
-                  //marginRight: "2%",
-                  //border: "1px solid blue",
-                }}
-                onClick={handleCloseProductos}
-              >
-                <Image className="imgX" src={"/images/x.png"} alt="x" />
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <Typography variant="h1">
-                <div className="whiteColorText">Productos</div>
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                marginTop: "2%",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <Box>
-                <Autocomplete
-                  onChange={onTagsChangeCategorie}
-                  options={optionsCategories}
-                  getOptionLabel={(option) => option.categorie}
-                  style={{ width: 300, marginRight: "14%", marginTop: "4%" }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      sx={{
-                        "& .MuiOutlinedInput-input": {
-                          fontSize: 20,
-                          color: ThemeLogisticsOne.palette.primary.main,
-                          backgroundColor: "white",
-                          fontFamily: robotoFont,
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          backgroundColor: "white",
-                        },
-                      }}
-                      label="Categoria"
-                      placeholder="Categorias"
-                      size="small"
-                      variant="outlined"
-                      InputProps={{
-                        ...params.InputProps,
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          //overflow: "hidden",
-                          width: "100%",
-                          color: ThemeLogisticsOne.palette.primary.main,
-                          fontSize: 20,
-                          //fontFamily: "Roboto",
-                          fontWeight: 900,
-                        },
-                      }}
-                    />
-                  )}
-                />
-              </Box>
-              <Box>
-                <Autocomplete
-                  onChange={onTagsChangeBrand}
-                  options={optionsBrands}
-                  getOptionLabel={(option) => option.brand}
-                  style={{ width: 300, marginTop: "4%" }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      sx={{
-                        "& .MuiOutlinedInput-input": {
-                          fontSize: 20,
-                          color: ThemeLogisticsOne.palette.primary.main,
-                          backgroundColor: "white",
-                          fontFamily: robotoFont,
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          backgroundColor: "white",
-                        },
-                      }}
-                      label="Marca"
-                      placeholder="Marcas"
-                      size="small"
-                      variant="outlined"
-                      InputProps={{
-                        ...params.InputProps,
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          //overflow: "hidden",
-                          width: "100%",
-                          color: ThemeLogisticsOne.palette.primary.main,
-                          fontSize: 20,
-                          //fontFamily: "Pacifico",
-                          fontWeight: 900,
-                        },
-                      }}
-                    />
-                  )}
-                />
-              </Box>
-            </Box>
-          </ThemeProvider>
-        </Box>
-      )}
+      {desktopImageLoaded && showDesktopGlobo02 && <Products />}
       {desktopImageLoaded && showDesktopGlobo03 && (
         <Box
           sx={{
@@ -433,4 +238,5 @@ export default function Home() {
       )}
     </>
   );
-}
+};
+export default Home;
