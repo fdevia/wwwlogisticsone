@@ -355,21 +355,46 @@ const Products: React.FC = () => {
               />
             </Box>
           </Box>
-          <Box sx={{ marginLeft: "12%", marginTop: "2%", minHeight: "550px" }}>
+          <Box
+            sx={{
+              //marginLeft: "20%",
+              marginTop: "3%",
+              minHeight: "550px",
+              //justifyContent: "center",
+              //alignContent: "center",
+            }}
+          >
             {productsView.map((item, index) => (
-              <div key={index}>
-                <div>
+              <Box
+                key={index}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Box>
                   <img
-                    width="200px"
+                    width="220px"
                     height="auto"
                     src={`/images/${item.sku}.png`}
                   />
-                  <label>{item.productDescription}</label>
-                </div>
-              </div>
+                </Box>
+                <Box
+                  sx={{
+                    width: "300px",
+                    textAlign: "center",
+                    marginTop: "1%",
+                    marginBottom: "1%",
+                  }}
+                >
+                  <label style={{ color: "white" }}>
+                    {item.productDescription}
+                  </label>
+                </Box>
+              </Box>
             ))}
-
-            <label>Items</label>
           </Box>
           <Box
             sx={{
