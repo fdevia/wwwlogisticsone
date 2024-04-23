@@ -124,7 +124,7 @@ const Products: React.FC = () => {
           currentPage * itemsPerPage
         )
     );
-    console.log(" filteredProducts.length " + filteredProducts.length);
+    console.log("   filteredProducts.length  " + filteredProducts.length);
     setNumOfPages(Math.ceil(filteredProducts.length / itemsPerPage));
     /*
     setProducts(
