@@ -105,7 +105,7 @@ const ThemeLogisticsOne = createTheme({
     h5: {
       fontFamily: robotoFont.style.fontFamily,
       fontWeight: "400",
-      fontSize: "21px",
+      fontSize: "16px",
       align: "left",
       color: "#707070",
     },

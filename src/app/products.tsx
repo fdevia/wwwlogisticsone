@@ -358,7 +358,7 @@ const Products: React.FC = () => {
           <Box
             sx={{
               //marginLeft: "20%",
-              marginTop: "3%",
+              marginTop: "2%",
               minHeight: "550px",
               //justifyContent: "center",
               //alignContent: "center",
@@ -389,9 +389,11 @@ const Products: React.FC = () => {
                     marginBottom: "1%",
                   }}
                 >
-                  <label style={{ color: "white" }}>
-                    {item.productDescription}
-                  </label>
+                  <Typography variant="h5">
+                    <label style={{ color: "white" }}>
+                      {item.productDescription}
+                    </label>
+                  </Typography>
                 </Box>
               </Box>
             ))}
@@ -401,7 +403,7 @@ const Products: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignContent: "center",
-              marginTop: "2%",
+              marginTop: "1%",
             }}
           >
             <Pagination
