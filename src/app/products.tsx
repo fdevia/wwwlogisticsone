@@ -78,7 +78,7 @@ const Products: React.FC = () => {
     updateShowDesktopGlobo02,
   } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(Array<IProduct>);
-  //const [products, setProducts] = useState([]);
+  const [productsView, setProductsView] = useState(Array<IProduct>);
   const convertWithPixels = (value: number, total: number) =>
     (total * value) / 2400;
   const convertHeightPixels = (value: number, total: number) =>
@@ -93,6 +93,8 @@ const Products: React.FC = () => {
   const [y2] = useState(550);
   const [x3] = useState(2100);
   const [y3] = useState(250);
+  var productsWork: any[] = [];
+  var productsFiltered;
 
   const handleCloseProductos = () => updateShowDesktopGlobo02(false);
   const onTagsChangeCategorie = (
@@ -116,16 +118,49 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     console.log("products.length " + products.length);
-    setFilteredProducts(
+    console.log("currentCategorieId " + currentCategorieId);
+    console.log("products.idCategorie " + products[0].idCategorie);
+    console.log("products.sku " + products[0].sku);
+    productsFiltered = products.filter(
+      (item) => item.idCategorie === currentCategorieId
+    );
+    productsWork = productsFiltered;
+    console.log("productsWork.length " + productsWork.length);
+    console.log("productsWork.idCategorie " + productsWork[0].idCategorie);
+    console.log("productsWork.sku " + productsWork[0].sku);
+    console.log(
+      "productsWork.description " + productsWork[0].productDescription
+    );
+    console.log("productsWork.idCategorie " + productsWork[1].idCategorie);
+    console.log("productsWork.sku " + productsWork[1].sku);
+    console.log(
+      "productsWork.description " + productsWork[1].productDescription
+    );
+    /*
+    productsWork = setFilteredProducts(
       products
         .filter((item) => item.idCategorie === currentCategorieId)
         .slice(
           currentPage * itemsPerPage - itemsPerPage,
           currentPage * itemsPerPage
         )
+    );*/
+    /*
+    setProducts(
+      productsFiltered.slice(
+        currentPage * itemsPerPage - itemsPerPage,
+        currentPage * itemsPerPage
+      )
     );
-    console.log("   filteredProducts.length  " + filteredProducts.length);
-    setNumOfPages(Math.ceil(filteredProducts.length / itemsPerPage));
+    */
+    console.log("   filteredProducts.length  " + productsWork.length);
+    setNumOfPages(Math.ceil(productsWork.length / itemsPerPage));
+    setProductsView(
+      productsFiltered.slice(
+        currentPage * itemsPerPage - itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    );
     /*
     setProducts(
       productsFiltered.slice(
@@ -149,7 +184,9 @@ const Products: React.FC = () => {
   }, []);
 
   const handleChangePage = async (event: any, value: number) => {
+    alert(value);
     await updateCurrentPage(value);
+    //await changeCurrentPage(value);
     //cartCtx.setCurrentPage(value);
     //cartCtx.changeCurrentPage(value);
   };
@@ -319,7 +356,7 @@ const Products: React.FC = () => {
             </Box>
           </Box>
           <Box sx={{ marginLeft: "12%", marginTop: "2%", minHeight: "550px" }}>
-            {filteredProducts.map((item, index) => (
+            {productsView.map((item, index) => (
               <div key={index}>
                 <div>
                   <img
