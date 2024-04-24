@@ -6,7 +6,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useWindowSize } from "react-use";
 import { Roboto } from "next/font/google";
@@ -65,6 +65,9 @@ const robotoFont = Roboto({
 });
 
 const Products: React.FC = () => {
+  const productsContainerRef = useRef<HTMLDivElement | null>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
   const [itemsPerPage] = useState(2);
   const [numOfPages, setNumOfPages] = useState(0);
   const {
@@ -118,6 +121,13 @@ const Products: React.FC = () => {
       console.log(newValue.brand);
     }
   };
+
+  useEffect(() => {
+    if (productsContainerRef.current !== null) {
+      setContainerWidth(productsContainerRef.current.offsetWidth);
+      setContainerHeight(productsContainerRef.current.offsetHeight);
+    }
+  }, [productsContainerRef]);
 
   useEffect(() => {
     console.log("products.length " + products.length);
@@ -358,14 +368,19 @@ const Products: React.FC = () => {
             </Box>
           </Box>
           <Box
+            ref={productsContainerRef}
             sx={{
               //marginLeft: "20%",
+
               marginTop: "2%",
               minHeight: "550px",
               //justifyContent: "center",
               //alignContent: "center",
             }}
           >
+            <label>{containerWidth}</label>
+            <label>{containerHeight}</label>
+
             {productsView.map((item, index) => (
               <Box
                 key={index}
@@ -376,16 +391,27 @@ const Products: React.FC = () => {
                   justifyContent: "center",
                 }}
               >
-                <Box>
-                  <img
-                    width="220px"
-                    height="auto"
+                <Box
+                  sx={{
+                    //border: "solid 10px green",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "30%",
+                    height: "30%",
+                  }}
+                >
+                  <Image
+                    alt="skupng"
+                    width={containerWidth * 0.38} // Calcular el ancho relativo
+                    height={containerHeight * 0.38} // Calcular la altura relativa
                     src={`/images/${item.sku}.png`}
                   />
                 </Box>
                 <Box
                   sx={{
-                    width: "300px",
+                    //width: "300px",
                     textAlign: "center",
                     marginTop: "1%",
                     marginBottom: "1%",
