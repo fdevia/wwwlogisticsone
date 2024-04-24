@@ -107,8 +107,6 @@ const Products: React.FC = () => {
     if (newValue) {
       updateCurrentCategorieId(newValue.id);
       updateCurrentPage(1);
-      //alert(newValue.id + " " + newValue.categorie);
-      console.log(newValue.categorie);
     }
   };
   const onBrandChange = (
@@ -316,17 +314,10 @@ const Products: React.FC = () => {
           <Box
             ref={productsContainerRef}
             sx={{
-              //marginLeft: "20%",
-
               marginTop: "2%",
               minHeight: "550px",
-              //justifyContent: "center",
-              //alignContent: "center",
             }}
           >
-            <label>{containerWidth}</label>
-            <label>{containerHeight}</label>
-
             {productsView.map((item, index) => (
               <Box
                 key={index}
@@ -339,7 +330,6 @@ const Products: React.FC = () => {
               >
                 <Box
                   sx={{
-                    //border: "solid 10px green",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
