@@ -14,8 +14,6 @@ export interface IProduct {
 }
 
 interface IProductContext {
-  cardId: string;
-  updateCardId: (cardId: string) => Promise<void>;
   showDesktopGlobo02: boolean;
   updateShowDesktopGlobo02: (show: boolean) => Promise<void>;
   currentCategorieId: string;
@@ -27,8 +25,6 @@ interface IProductContext {
 }
 
 const ProductContextDefaultValues: IProductContext = {
-  cardId: "19431215",
-  updateCardId: async () => {},
   showDesktopGlobo02: false,
   updateShowDesktopGlobo02: async () => {},
   currentCategorieId: "0005",
@@ -46,9 +42,6 @@ export const ProductContext = createContext<IProductContext>(
 export const ProductContextProvider: React.FC<
   PropsWithChildren<childrenProps>
 > = ({ children }) => {
-  const [cardId, setCardId] = useState<string>(
-    ProductContextDefaultValues.cardId
-  );
   const [showDesktopGlobo02, setShowDesktopGlobo02] = useState<boolean>(
     ProductContextDefaultValues.showDesktopGlobo02
   );
@@ -69,11 +62,6 @@ export const ProductContextProvider: React.FC<
   const [currentPage, setCurrentPage] = useState<number>(
     ProductContextDefaultValues.currentPage
   );
-
-  const updateCardId = async (cardId: string) => {
-    console.log("updateCardId");
-    setCardId(cardId);
-  };
 
   const updateShowDesktopGlobo02 = async (show: boolean) => {
     console.log("ProductContext updateShowDesktopGlobo02");
@@ -109,8 +97,6 @@ export const ProductContextProvider: React.FC<
   return (
     <ProductContext.Provider
       value={{
-        cardId,
-        updateCardId,
         showDesktopGlobo02,
         updateShowDesktopGlobo02,
         currentCategorieId,

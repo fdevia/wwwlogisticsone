@@ -71,8 +71,6 @@ const Products: React.FC = () => {
   const [itemsPerPage] = useState(2);
   const [numOfPages, setNumOfPages] = useState(0);
   const {
-    cardId,
-    updateCardId,
     products,
     currentPage,
     updateCurrentPage,
@@ -108,6 +106,7 @@ const Products: React.FC = () => {
   ) => {
     if (newValue) {
       updateCurrentCategorieId(newValue.id);
+      updateCurrentPage(1);
       //alert(newValue.id + " " + newValue.categorie);
       console.log(newValue.categorie);
     }
@@ -130,43 +129,10 @@ const Products: React.FC = () => {
   }, [productsContainerRef]);
 
   useEffect(() => {
-    console.log("products.length " + products.length);
-    console.log("currentCategorieId " + currentCategorieId);
-    console.log("products.idCategorie " + products[0].idCategorie);
-    console.log("products.sku " + products[0].sku);
     productsFiltered = products.filter(
       (item) => item.idCategorie === currentCategorieId
     );
     productsWork = productsFiltered;
-    console.log("productsWork.length " + productsWork.length);
-    console.log("productsWork.idCategorie " + productsWork[0].idCategorie);
-    console.log("productsWork.sku " + productsWork[0].sku);
-    console.log(
-      "productsWork.description " + productsWork[0].productDescription
-    );
-    console.log("productsWork.idCategorie " + productsWork[1].idCategorie);
-    console.log("productsWork.sku " + productsWork[1].sku);
-    console.log(
-      "productsWork.description " + productsWork[1].productDescription
-    );
-    /*
-    productsWork = setFilteredProducts(
-      products
-        .filter((item) => item.idCategorie === currentCategorieId)
-        .slice(
-          currentPage * itemsPerPage - itemsPerPage,
-          currentPage * itemsPerPage
-        )
-    );*/
-    /*
-    setProducts(
-      productsFiltered.slice(
-        currentPage * itemsPerPage - itemsPerPage,
-        currentPage * itemsPerPage
-      )
-    );
-    */
-    console.log("   filteredProducts.length  " + productsWork.length);
     setNumOfPages(Math.ceil(productsWork.length / itemsPerPage));
     setProductsView(
       productsFiltered.slice(
@@ -174,26 +140,6 @@ const Products: React.FC = () => {
         currentPage * itemsPerPage
       )
     );
-    /*
-    setProducts(
-      productsFiltered.slice(
-        cartCtx.currentPage * itemsPerPage - itemsPerPage,
-        cartCtx.currentPage * itemsPerPage
-      )*/
-    /*
-    const productsFiltered = products.filter((ar) =>
-      currentCategorieId.find((rm) => rm.currentCategorieId  === ar.genero)
-    );
-    //console.log(products[0].sku);
-    //const found = products.filter((item) => item.idCategorie === currentCategorieId));
-    //let temp = data.find((ar) => ar.sku === values.itemId);
-   
-    const found = products.find((ctxitem) => ctxitem.currentCategorieId === item.currentCategorieId);
-    let temp = products.find(
-      (ar) => ar.categorieId === values.currentCategorieId
-    );
-    updateCardId("1018505033");
-    */
   }, [currentCategorieId, currentPage]);
 
   const handleChangePage = async (event: any, value: number) => {
