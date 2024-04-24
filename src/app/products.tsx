@@ -80,6 +80,10 @@ const Products: React.FC = () => {
     updateCurrentBrandId,
     showDesktopGlobo02,
     updateShowDesktopGlobo02,
+    categoriesEnable,
+    updateCategoriesEnable,
+    brandsEnable,
+    updateBrandsEnable,
   } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(Array<IProduct>);
   const [productsView, setProductsView] = useState(Array<IProduct>);
@@ -97,8 +101,8 @@ const Products: React.FC = () => {
   const [y2] = useState(550);
   const [x3] = useState(2100);
   const [y3] = useState(250);
-  var productsWork: any[] = [];
-  var productsFiltered;
+  //var productsWork: any[] = [];
+  //var productsFiltered;
 
   const handleCloseProductos = () => updateShowDesktopGlobo02(false);
 
@@ -109,6 +113,8 @@ const Products: React.FC = () => {
     if (newValue) {
       updateCurrentCategorieId(newValue.id);
       updateCurrentPage(1);
+      updateCategoriesEnable(true);
+      updateBrandsEnable(false);
     }
   };
   const onBrandChange = (
@@ -118,6 +124,8 @@ const Products: React.FC = () => {
     if (newValue) {
       updateCurrentBrandId(newValue.id);
       updateCurrentPage(1);
+      updateCategoriesEnable(false);
+      updateBrandsEnable(true);
     }
   };
 
@@ -127,8 +135,10 @@ const Products: React.FC = () => {
       setContainerHeight(productsContainerRef.current.offsetHeight);
     }
   }, [productsContainerRef]);
-
+  /*
   useEffect(() => {
+    let productsWork: any[] = [];
+    let productsFiltered;
     productsFiltered = products.filter(
       (item) => item.idCategorie === currentCategorieId
     );
@@ -141,11 +151,22 @@ const Products: React.FC = () => {
       )
     );
   }, [currentCategorieId, currentPage]);
-
+*/
   useEffect(() => {
-    productsFiltered = products.filter(
-      (item) => item.idBrand === currentBrandId
-    );
+    var productsWork: any[] = [];
+    let productsFiltered;
+    if (categoriesEnable && currentCategorieId !== null) {
+      productsFiltered = products.filter(
+        (item) => item.idCategorie === currentCategorieId
+      );
+    } else if (brandsEnable && currentBrandId !== null) {
+      productsFiltered = products.filter(
+        (item) => item.idBrand === currentBrandId
+      );
+    } else {
+      // Si no hay ninguna categoría o marca habilitada, no se aplica ningún filtro
+      productsFiltered = products;
+    }
     productsWork = productsFiltered;
     setNumOfPages(Math.ceil(productsWork.length / itemsPerPage));
     setProductsView(
@@ -154,7 +175,13 @@ const Products: React.FC = () => {
         currentPage * itemsPerPage
       )
     );
-  }, [currentBrandId, currentPage]);
+  }, [
+    currentCategorieId,
+    currentBrandId,
+    currentPage,
+    categoriesEnable,
+    brandsEnable,
+  ]);
 
   const handleChangePage = async (event: any, value: number) => {
     await updateCurrentPage(value);

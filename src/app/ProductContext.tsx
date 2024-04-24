@@ -18,8 +18,12 @@ interface IProductContext {
   updateShowDesktopGlobo02: (show: boolean) => Promise<void>;
   currentCategorieId: string;
   updateCurrentCategorieId: (categorieId: string) => Promise<void>;
+  categoriesEnable: boolean;
+  updateCategoriesEnable: (enable: boolean) => Promise<void>;
   currentBrandId: string;
   updateCurrentBrandId: (brandId: string) => Promise<void>;
+  brandsEnable: boolean;
+  updateBrandsEnable: (enable: boolean) => Promise<void>;
   products: Array<IProduct>;
   updateProducts: () => Promise<void>;
   currentPage: number;
@@ -31,8 +35,12 @@ const ProductContextDefaultValues: IProductContext = {
   updateShowDesktopGlobo02: async () => {},
   currentCategorieId: "0005",
   updateCurrentCategorieId: async () => {},
+  categoriesEnable: true,
+  updateCategoriesEnable: async () => {},
   currentBrandId: "0001",
   updateCurrentBrandId: async () => {},
+  brandsEnable: false,
+  updateBrandsEnable: async () => {},
   products: [],
   updateProducts: async () => {},
   currentPage: 1,
@@ -71,6 +79,14 @@ export const ProductContextProvider: React.FC<
     ProductContextDefaultValues.currentPage
   );
 
+  const [categoriesEnable, setCategoriesEnable] = useState<boolean>(
+    ProductContextDefaultValues.categoriesEnable
+  );
+
+  const [brandsEnable, setBrandsEnable] = useState<boolean>(
+    ProductContextDefaultValues.brandsEnable
+  );
+
   const updateShowDesktopGlobo02 = async (show: boolean) => {
     console.log("ProductContext updateShowDesktopGlobo02");
     setShowDesktopGlobo02(show);
@@ -107,6 +123,14 @@ export const ProductContextProvider: React.FC<
     setCurrentPage(currentPage);
   };
 
+  const updateCategoriesEnable = async (enable: boolean) => {
+    setCategoriesEnable(enable);
+  };
+
+  const updateBrandsEnable = async (enable: boolean) => {
+    setBrandsEnable(enable);
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -120,6 +144,10 @@ export const ProductContextProvider: React.FC<
         updateCurrentPage,
         currentBrandId,
         updateCurrentBrandId,
+        categoriesEnable,
+        updateCategoriesEnable,
+        brandsEnable,
+        updateBrandsEnable,
       }}
     >
       {children}
