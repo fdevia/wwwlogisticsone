@@ -65,7 +65,7 @@ const robotoFont = Roboto({
 });
 
 const Products: React.FC = () => {
-  const [itemsPerPage] = useState(4);
+  const [itemsPerPage] = useState(2);
   const [numOfPages, setNumOfPages] = useState(0);
   const {
     cardId,
@@ -74,6 +74,7 @@ const Products: React.FC = () => {
     currentPage,
     updateCurrentPage,
     currentCategorieId,
+    updateCurrentCategorieId,
     showDesktopGlobo02,
     updateShowDesktopGlobo02,
   } = useContext(ProductContext);
@@ -97,16 +98,18 @@ const Products: React.FC = () => {
   var productsFiltered;
 
   const handleCloseProductos = () => updateShowDesktopGlobo02(false);
-  const onTagsChangeCategorie = (
+
+  const onCategorieChange = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: { id: string; categorie: string } | null
   ) => {
     if (newValue) {
-      alert(newValue.id + " " + newValue.categorie);
+      updateCurrentCategorieId(newValue.id);
+      //alert(newValue.id + " " + newValue.categorie);
       console.log(newValue.categorie);
     }
   };
-  const onTagsChangeBrand = (
+  const onBrandChange = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: { id: string; brand: string } | null
   ) => {
@@ -181,10 +184,9 @@ const Products: React.FC = () => {
     );
     updateCardId("1018505033");
     */
-  }, []);
+  }, [currentCategorieId, currentPage]);
 
   const handleChangePage = async (event: any, value: number) => {
-    alert(value);
     await updateCurrentPage(value);
     //await changeCurrentPage(value);
     //cartCtx.setCurrentPage(value);
@@ -270,7 +272,7 @@ const Products: React.FC = () => {
               }}
             >
               <Autocomplete
-                onChange={onTagsChangeCategorie}
+                onChange={onCategorieChange}
                 options={optionsCategories}
                 getOptionLabel={(option) => option.categorie}
                 style={{ width: 300, marginRight: "16%", marginTop: "4%" }}
@@ -313,7 +315,7 @@ const Products: React.FC = () => {
             </Box>
             <Box>
               <Autocomplete
-                onChange={onTagsChangeBrand}
+                onChange={onBrandChange}
                 options={optionsBrands}
                 getOptionLabel={(option) => option.brand}
                 style={{ width: 300, marginTop: "4%" }}
