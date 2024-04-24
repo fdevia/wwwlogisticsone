@@ -371,6 +371,7 @@ const Products: React.FC = () => {
             }}
           >
             <Pagination
+              sx={{ button: { color: "#ffffff" } }}
               count={numOfPages}
               page={currentPage}
               onChange={handleChangePage}
