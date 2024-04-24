@@ -12,13 +12,8 @@ import { log } from "console";
 //import { AppProps } from "next/app";
 
 const Home: React.FC = () => {
-  const {
-    cardId,
-    updateProducts,
-    updateCardId,
-    showDesktopGlobo02,
-    updateShowDesktopGlobo02,
-  } = useContext(ProductContext);
+  const { updateProducts, showDesktopGlobo02, updateShowDesktopGlobo02 } =
+    useContext(ProductContext);
   const { width, height } = useWindowSize();
   const [desktopImageLoaded] = useState(true);
   const [currentWindowWidth, setCurrentWindowWidth] = useState(0);
@@ -132,11 +127,6 @@ const Home: React.FC = () => {
       alert(newValue.id + " " + newValue.brand);
       console.log(newValue.brand);
     }
-  };
-
-  const handleButtonOnClick = async () => {
-    console.log("ingreso");
-    await updateCardId("1018505033");
   };
 
   return (
