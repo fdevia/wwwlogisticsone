@@ -18,6 +18,8 @@ interface IProductContext {
   updateShowDesktopGlobo02: (show: boolean) => Promise<void>;
   currentCategorieId: string;
   updateCurrentCategorieId: (categorieId: string) => Promise<void>;
+  currentBrandId: string;
+  updateCurrentBrandId: (brandId: string) => Promise<void>;
   products: Array<IProduct>;
   updateProducts: () => Promise<void>;
   currentPage: number;
@@ -29,6 +31,8 @@ const ProductContextDefaultValues: IProductContext = {
   updateShowDesktopGlobo02: async () => {},
   currentCategorieId: "0005",
   updateCurrentCategorieId: async () => {},
+  currentBrandId: "0001",
+  updateCurrentBrandId: async () => {},
   products: [],
   updateProducts: async () => {},
   currentPage: 1,
@@ -59,6 +63,10 @@ export const ProductContextProvider: React.FC<
     ProductContextDefaultValues.currentCategorieId
   );
 
+  const [currentBrandId, setCurrentBrandId] = useState<string>(
+    ProductContextDefaultValues.currentBrandId
+  );
+
   const [currentPage, setCurrentPage] = useState<number>(
     ProductContextDefaultValues.currentPage
   );
@@ -71,6 +79,11 @@ export const ProductContextProvider: React.FC<
   const updateCurrentCategorieId = async (categorieId: string) => {
     console.log("ProductContext updateShowDesktopGlobo02");
     setCurrentCategorieId(categorieId);
+  };
+
+  const updateCurrentBrandId = async (brandId: string) => {
+    console.log("ProductContext updateShowDesktopGlobo02");
+    setCurrentBrandId(brandId);
   };
 
   const updateProducts = async () => {
@@ -105,6 +118,8 @@ export const ProductContextProvider: React.FC<
         updateProducts,
         currentPage,
         updateCurrentPage,
+        currentBrandId,
+        updateCurrentBrandId,
       }}
     >
       {children}

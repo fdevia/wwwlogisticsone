@@ -76,6 +76,8 @@ const Products: React.FC = () => {
     updateCurrentPage,
     currentCategorieId,
     updateCurrentCategorieId,
+    currentBrandId,
+    updateCurrentBrandId,
     showDesktopGlobo02,
     updateShowDesktopGlobo02,
   } = useContext(ProductContext);
@@ -114,8 +116,8 @@ const Products: React.FC = () => {
     newValue: { id: string; brand: string } | null
   ) => {
     if (newValue) {
-      alert(newValue.id + " " + newValue.brand);
-      console.log(newValue.brand);
+      updateCurrentBrandId(newValue.id);
+      updateCurrentPage(1);
     }
   };
 
@@ -139,6 +141,20 @@ const Products: React.FC = () => {
       )
     );
   }, [currentCategorieId, currentPage]);
+
+  useEffect(() => {
+    productsFiltered = products.filter(
+      (item) => item.idBrand === currentBrandId
+    );
+    productsWork = productsFiltered;
+    setNumOfPages(Math.ceil(productsWork.length / itemsPerPage));
+    setProductsView(
+      productsFiltered.slice(
+        currentPage * itemsPerPage - itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    );
+  }, [currentBrandId, currentPage]);
 
   const handleChangePage = async (event: any, value: number) => {
     await updateCurrentPage(value);
