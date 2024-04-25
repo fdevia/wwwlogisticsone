@@ -16,6 +16,7 @@ const Home: React.FC = () => {
     useContext(ProductContext);
   const { width, height } = useWindowSize();
   const [desktopImageLoaded] = useState(true);
+  const [mobileImageLoaded] = useState(true);
   const [currentWindowWidth, setCurrentWindowWidth] = useState(0);
   const [currentWindowHeight, setCurrentWindowHeight] = useState(0);
   const [showDesktopGlobo01, setShowDesktopGlobo01] = useState(false);
@@ -224,6 +225,27 @@ const Home: React.FC = () => {
               //style={{ width: "auto", height: "auto" }}
             />
           </Box>
+        </Box>
+      )}
+      {mobileImageLoaded && currentWindowWidth <= 768 && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            //height: "100vh",
+            overflow: "hidden",
+          }}
+        >
+          <Image
+            alt="wwwlogisticsone"
+            src="/images/wwwlogisticsonemobile.jpg"
+            //objectFit="cover"
+            width={currentWindowWidth}
+            height={currentWindowHeight}
+            style={{ width: "100%", height: "auto" }}
+            priority
+          />
         </Box>
       )}
     </>
