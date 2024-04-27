@@ -239,7 +239,7 @@ const Home: React.FC = () => {
         >
           <Image
             alt="wwwlogisticsone"
-            src="/images/wwwlogisticsonemobile.jpg"
+            src="/images/wwwlogisticsonemobile.png"
             //objectFit="cover"
             width={currentWindowWidth}
             height={currentWindowHeight}

@@ -29,6 +29,91 @@ export interface IProduct {
   productDescription: string;
 }
 
+interface Category {
+  id: number;
+  name: string;
+  subcategories: Subcategory[];
+}
+
+interface Subcategory {
+  id: number;
+  name: string;
+  subsubcategories: Subsubcategory[];
+}
+
+interface Subsubcategory {
+  id: number;
+  name: string;
+}
+
+const categories: Category[] = [
+  {
+    id: 1,
+    name: "Limpieza",
+    subcategories: [
+      {
+        id: 11,
+        name: "Hogar",
+        subsubcategories: [
+          { id: 111, name: "Detergente" },
+          { id: 112, name: "Limpiatodo" },
+          { id: 113, name: "Suavizante" },
+        ],
+      },
+      {
+        id: 12,
+        name: "Cuidado Personal",
+        subsubcategories: [{ id: 121, name: "Jabones Liquidos" }],
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Confiteria",
+    subcategories: [
+      {
+        id: 21,
+        name: "Golosinas",
+        subsubcategories: [
+          { id: 211, name: "Chicle" },
+          { id: 212, name: "Chupetin led" },
+          { id: 213, name: "Mini gelatina" },
+          { id: 214, name: "Gelatina" },
+        ],
+      },
+      {
+        id: 22,
+        name: "Galleteria",
+        subsubcategories: [{ id: 221, name: "Wafer" }],
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Mascotas",
+    subcategories: [
+      {
+        id: 31,
+        name: "Arena aglutinante",
+        subsubcategories: [],
+      },
+    ],
+  },
+  // Otras categorías...
+];
+
+/*
+function MyAutocomplete() {
+  return (
+    <Autocomplete
+      options={categories}
+      getOptionLabel={(option) => option.name}
+      renderOption={(option) => option.name}
+      renderInput={(params) => <TextField {...params} label="Categories" />}
+    />
+  );
+}*/
+
 const optionsBrands = [
   { id: "0001", brand: "Blü" },
   { id: "0002", brand: "Chicle Tattoo" },
