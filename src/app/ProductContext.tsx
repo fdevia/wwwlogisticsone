@@ -105,7 +105,9 @@ export const ProductContextProvider: React.FC<
   const updateProducts = async () => {
     try {
       const response = await fetch(
-        "https://gist.githubusercontent.com/fdevia/8cfc8ef8afffe66e077a0ff4a0fbef48/raw/09be245f65f845dff114f15c650f262a61a85afa/productsLogisticsOne.json"
+        "https://gist.githubusercontent.com/fdevia/8cfc8ef8afffe66e077a0ff4a0fbef48/raw/bf5d8c4f5051e7c6924204db7a305630a425bc5b/productsLogisticsOne.json"
+        //"https://gist.githubusercontent.com/fdevia/8cfc8ef8afffe66e077a0ff4a0fbef48/raw/9650a41cfa86f272462b5b3a06fd1210af8f07f5/productsLogisticsOne.json"
+        //"https://gist.githubusercontent.com/fdevia/8cfc8ef8afffe66e077a0ff4a0fbef48/raw/09be245f65f845dff114f15c650f262a61a85afa/productsLogisticsOne.json"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch products");

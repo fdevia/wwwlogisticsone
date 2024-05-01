@@ -1,5 +1,7 @@
 import {
   Autocomplete,
+  Checkbox,
+  createFilterOptions,
   Box,
   Button,
   TextField,
@@ -12,6 +14,8 @@ import { useWindowSize } from "react-use";
 import { Roboto } from "next/font/google";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
 
 import { ProductContext } from "./ProductContext";
 import ThemeLogisticsOne from "./theme";
@@ -29,23 +33,590 @@ export interface IProduct {
   productDescription: string;
 }
 
+/*
 interface Category {
   id: number;
   name: string;
-  subcategories: Subcategory[];
+  subcategories: {
+    id: number;
+    name: string;
+    subsubcategories: { id: number; name: string }[];
+  }[];
 }
-
-interface Subcategory {
+*/
+type Category = {
   id: number;
   name: string;
-  subsubcategories: Subsubcategory[];
-}
+  childCategories?: Category[];
+};
 
-interface Subsubcategory {
+// describes the format that we want
+interface Option {
   id: number;
   name: string;
+  depth: number;
+  parentId: number | null;
+  matchTerms: string[];
 }
 
+const data = [
+  {
+    id: 1,
+    name: "Limpieza",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 11,
+        name: "Hogar",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 111,
+            name: "Detergente",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 112,
+            name: "Limpiatodo",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 113,
+            name: "Suavizante",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+      {
+        id: 12,
+        name: "Cuidado personal",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 121,
+            name: "Jabones liquidos",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Confiteria",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 21,
+        name: "Golosinas",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 211,
+            name: "Chicle",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 212,
+            name: "Chupetin led",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 213,
+            name: "Mini gelatina",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 214,
+            name: "Gelatina",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 215,
+            name: "Marshmellows",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+      {
+        id: 22,
+        name: "Galleteria",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 221,
+            name: "Wafer",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Mascotas",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 31,
+        name: "Arena para gatos",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 311,
+            name: "Arena aglutinante",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const dataBrand = [
+  {
+    id: 10,
+    name: "Blü",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 11,
+        name: "Detergente",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 111,
+            name: "140GR",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 112,
+            name: "500GR",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 113,
+            name: "750GR",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 114,
+            name: "1KG",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 115,
+            name: "14KG",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+      {
+        id: 12,
+        name: "Jabón liquido",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 121,
+            name: "1L",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 122,
+            name: "360ML",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+      {
+        id: 13,
+        name: "Limpiatodo",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 131,
+            name: "900ML",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+      {
+        id: 14,
+        name: "Suavizante",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 141,
+            name: "75ML",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 142,
+            name: "800ML",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 20,
+    name: "Chicle tatto",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 21,
+        name: "Chicle",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 211,
+            name: "3G",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 212,
+            name: "4.5G",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 30,
+    name: "Chupetin led dino",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 31,
+        name: "Chupetin led",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 311,
+            name: "Surtidos X 24UND",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 40,
+    name: "Chupetin led dona",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 41,
+        name: "Chupetin led",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 411,
+            name: "Surtidos X 24UND",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 50,
+    name: "Chupetin led frutti",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 51,
+        name: "Chupetin led",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 511,
+            name: "Surtidos X 24UND",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 60,
+    name: "Chupetin led mix sabores surtidos",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 61,
+        name: "Cupetin Led",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 611,
+            name: "Surtidos X 24UND",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 70,
+    name: "Chupetin led quack",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 71,
+        name: "Chupetin led",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 711,
+            name: "Surtidos X 24UND",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 80,
+    name: "Chupetin led unicornio",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 81,
+        name: "Chupetin led",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 811,
+            name: "Surtidos X 24UND",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 90,
+    name: "Capatitas",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 91,
+        name: "Arena para gatos",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 911,
+            name: "4KG X 4BLS",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 100,
+    name: "Mabel´s",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 101,
+        name: "Galleteria",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 1001,
+            name: "42GR",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 1002,
+            name: "107GR",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 200,
+    name: "Mallows mini mini",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 201,
+        name: "Marshmellows",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 2011,
+            name: "300GR",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 2012,
+            name: "500GR",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 300,
+    name: "Mini Gelatina",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 301,
+        name: "Mini gelatina",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 3011,
+            name: "15GX50U(12BLS)",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 3012,
+            name: "15GX100U (6BLS)",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 3013,
+            name: "15GX100U (6 VIT)",
+            stockItems: [],
+            childCategories: [],
+          },
+          {
+            id: 3014,
+            name: "15GX410U",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 400,
+    name: "Nativo",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 401,
+        name: "Gelatina",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 4011,
+            name: "250G",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 500,
+    name: "Solei",
+    parent: null,
+    stockItems: [],
+    childCategories: [
+      {
+        id: 501,
+        name: "Jabon liquido",
+        stockItems: [],
+        childCategories: [
+          {
+            id: 5011,
+            name: "550ML",
+            stockItems: [],
+            childCategories: [],
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const toOptions = (
+  category: Category,
+  depth: number = 0,
+  parentId: number | null = null
+): Option[] => {
+  const { id, name, childCategories = [] } = category;
+  const children = childCategories.flatMap((child) =>
+    toOptions(child, depth + 1, id)
+  );
+  const option = {
+    id,
+    name,
+    depth,
+    parentId,
+    matchTerms: [name].concat(children.map((obj) => obj.name)),
+  };
+  return [option].concat(children);
+};
+
+const optionsList: Option[] = data.flatMap((category) => toOptions(category));
+console.log("optionsList ", optionsList);
+/*
 const categories: Category[] = [
   {
     id: 1,
@@ -94,14 +665,40 @@ const categories: Category[] = [
     subcategories: [
       {
         id: 31,
-        name: "Arena aglutinante",
-        subsubcategories: [],
+        name: "Arena para gatos",
+        subsubcategories: [{ id: 311, name: "Arena aglutinante" }],
       },
     ],
   },
   // Otras categorías...
 ];
+*/
+/*
+const flattenedCategories = categories.flatMap((category) => {
+  return [
+    category,
+    ...category.subcategories,
+    ...category.subcategories.flatMap(
+      (subcategory) => subcategory.subsubcategories
+    ),
+  ];
+});
 
+console.log(flattenedCategories);
+*/
+/*
+const options = categories.flatMap((category) =>
+  category.subcategories.flatMap((subcategory) =>
+    subcategory.subsubcategories.map((subsubcategory) => ({
+      categoria: category.name,
+      subcategoria: subcategory.name,
+      subsubcategoria: subsubcategory.name,
+      id: subsubcategory.id, // Aquí podrías utilizar un ID único si lo necesitas
+    }))
+  )
+);
+*/
+//console.log(options);
 /*
 function MyAutocomplete() {
   return (
@@ -148,7 +745,21 @@ const robotoFont = Roboto({
   display: "swap",
   subsets: ["latin"],
 });
-
+/*
+const handleOnChangeCategorie = (event: React.ChangeEvent<{}>, value: any) => {
+  if (value) {
+    // Si se seleccionó una opción, aquí puedes acceder a la opción seleccionada con 'value'
+    console.log("Opción seleccionada:", value);
+    console.log("Opción seleccionada:", value.name);
+    // Realizar acciones adicionales según la opción seleccionada
+  } else {
+    // Si no hay una opción seleccionada, aquí puedes acceder al valor ingresado en el campo de entrada
+    const inputValue = value; //event.target.value;
+    console.log("Valor ingresado:", inputValue);
+    // Realizar acciones adicionales según el valor ingresado
+  }
+};
+*/
 const Products: React.FC = () => {
   const productsContainerRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -191,17 +802,20 @@ const Products: React.FC = () => {
 
   const handleCloseProductos = () => updateShowDesktopGlobo02(false);
 
-  const onCategorieChange = (
-    event: React.SyntheticEvent<Element, Event>,
-    newValue: { id: string; categorie: string } | null
+  const handleOnChangeCategorie = (
+    event: React.ChangeEvent<{}>,
+    value: any
   ) => {
-    if (newValue) {
-      updateCurrentCategorieId(newValue.id);
+    if (value) {
+      console.log("value.id " + value.id);
+      console.log("typeof value.id " + typeof value.id);
+      updateCurrentCategorieId(String(value.id));
       updateCurrentPage(1);
       updateCategoriesEnable(true);
       updateBrandsEnable(false);
     }
   };
+
   const onBrandChange = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: { id: string; brand: string } | null
@@ -238,12 +852,19 @@ const Products: React.FC = () => {
   }, [currentCategorieId, currentPage]);
 */
   useEffect(() => {
+    console.log("products ", products);
     var productsWork: any[] = [];
     let productsFiltered;
     if (categoriesEnable && currentCategorieId !== null) {
       productsFiltered = products.filter(
-        (item) => item.idCategorie === currentCategorieId
+        (item) =>
+          item.idCategorie.substring(0, currentCategorieId.length) ===
+          currentCategorieId
       );
+      /*
+      productsFiltered = products.filter(
+        (item) => item.idCategorie === currentCategorieId
+      );*/
     } else if (brandsEnable && currentBrandId !== null) {
       productsFiltered = products.filter(
         (item) => item.idBrand === currentBrandId
@@ -354,10 +975,35 @@ const Products: React.FC = () => {
               }}
             >
               <Autocomplete
-                onChange={onCategorieChange}
-                options={optionsCategories}
-                getOptionLabel={(option) => option.categorie}
-                style={{ width: 300, marginRight: "16%", marginTop: "4%" }}
+                options={optionsList}
+                onChange={handleOnChangeCategorie}
+                getOptionLabel={(option) => option.name}
+                style={{ width: 300, marginTop: "4%", marginRight: "14%" }}
+                renderOption={(props, option, { selected, inputValue }) => {
+                  const matches = match(option.name, inputValue);
+                  console.log("matches ", matches);
+                  const parts = parse(option.name, matches);
+                  return (
+                    <li {...props} key={option.id}>
+                      <Checkbox
+                        checked={selected}
+                        sx={{ ml: 2 * option.depth }}
+                      />
+                      <div>
+                        {parts.map((part, index) => (
+                          <span
+                            key={index}
+                            style={{
+                              fontWeight: part.highlight ? 700 : 400,
+                            }}
+                          >
+                            {part.text}
+                          </span>
+                        ))}
+                      </div>
+                    </li>
+                  );
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -387,12 +1033,16 @@ const Products: React.FC = () => {
                         width: "100%",
                         color: ThemeLogisticsOne.palette.primary.main,
                         fontSize: 20,
-                        //fontFamily: "Roboto",
+                        //fontFamily: "Pacifico",
                         fontWeight: 900,
                       },
                     }}
                   />
                 )}
+                filterOptions={createFilterOptions({
+                  // join with some arbitrary separator to prevent matches across adjacent terms
+                  stringify: (option) => option.matchTerms.join("//"),
+                })}
               />
             </Box>
             <Box>
