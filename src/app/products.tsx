@@ -59,7 +59,7 @@ interface Option {
   matchTerms: string[];
 }
 
-const data = [
+const dataCategorie = [
   {
     id: 1,
     name: "Limpieza",
@@ -439,7 +439,7 @@ const dataBrand = [
   },
   {
     id: 90,
-    name: "Capatitas",
+    name: "Copatitas",
     parent: null,
     stockItems: [],
     childCategories: [
@@ -614,152 +614,20 @@ const toOptions = (
   return [option].concat(children);
 };
 
-const optionsList: Option[] = data.flatMap((category) => toOptions(category));
-console.log("optionsList ", optionsList);
-/*
-const categories: Category[] = [
-  {
-    id: 1,
-    name: "Limpieza",
-    subcategories: [
-      {
-        id: 11,
-        name: "Hogar",
-        subsubcategories: [
-          { id: 111, name: "Detergente" },
-          { id: 112, name: "Limpiatodo" },
-          { id: 113, name: "Suavizante" },
-        ],
-      },
-      {
-        id: 12,
-        name: "Cuidado Personal",
-        subsubcategories: [{ id: 121, name: "Jabones Liquidos" }],
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Confiteria",
-    subcategories: [
-      {
-        id: 21,
-        name: "Golosinas",
-        subsubcategories: [
-          { id: 211, name: "Chicle" },
-          { id: 212, name: "Chupetin led" },
-          { id: 213, name: "Mini gelatina" },
-          { id: 214, name: "Gelatina" },
-        ],
-      },
-      {
-        id: 22,
-        name: "Galleteria",
-        subsubcategories: [{ id: 221, name: "Wafer" }],
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Mascotas",
-    subcategories: [
-      {
-        id: 31,
-        name: "Arena para gatos",
-        subsubcategories: [{ id: 311, name: "Arena aglutinante" }],
-      },
-    ],
-  },
-  // Otras categorías...
-];
-*/
-/*
-const flattenedCategories = categories.flatMap((category) => {
-  return [
-    category,
-    ...category.subcategories,
-    ...category.subcategories.flatMap(
-      (subcategory) => subcategory.subsubcategories
-    ),
-  ];
-});
-
-console.log(flattenedCategories);
-*/
-/*
-const options = categories.flatMap((category) =>
-  category.subcategories.flatMap((subcategory) =>
-    subcategory.subsubcategories.map((subsubcategory) => ({
-      categoria: category.name,
-      subcategoria: subcategory.name,
-      subsubcategoria: subsubcategory.name,
-      id: subsubcategory.id, // Aquí podrías utilizar un ID único si lo necesitas
-    }))
-  )
+const optionsListCategories: Option[] = dataCategorie.flatMap((category) =>
+  toOptions(category)
 );
-*/
-//console.log(options);
-/*
-function MyAutocomplete() {
-  return (
-    <Autocomplete
-      options={categories}
-      getOptionLabel={(option) => option.name}
-      renderOption={(option) => option.name}
-      renderInput={(params) => <TextField {...params} label="Categories" />}
-    />
-  );
-}*/
 
-const optionsBrands = [
-  { id: "0001", brand: "Blü" },
-  { id: "0002", brand: "Chicle Tattoo" },
-  { id: "0003", brand: "Chuppetin led dino" },
-  { id: "0004", brand: "Chuppetin led dona" },
-  { id: "0005", brand: "Chuppetin led frutti" },
-  { id: "0006", brand: "Chuppetin led mix sabores surtidos" },
-  { id: "0007", brand: "Chuppetin led quack" },
-  { id: "0008", brand: "Chuppetin led unicornio" },
-  { id: "0009", brand: "Copatitas" },
-  { id: "0010", brand: "Mabel´s" },
-  { id: "0011", brand: "Mini gelatina" },
-  { id: "0012", brand: "Gelatina" },
-  { id: "0013", brand: "Jabón líquido" },
-];
-
-const optionsCategories = [
-  { id: "0001", categorie: "Arena aglutinante" },
-  { id: "0002", categorie: "Chicle" },
-  { id: "0003", categorie: "Chupetin led" },
-  { id: "0004", categorie: "Detergente" },
-  { id: "0005", categorie: "Galleteria" },
-  { id: "0006", categorie: "Gelatina" },
-  { id: "0007", categorie: "Jabón líquido" },
-  { id: "0008", categorie: "Limpiatodo" },
-  { id: "0009", categorie: "Mini gelatina" },
-  { id: "0010", categorie: "Suavizante" },
-];
+const optionsListBrands: Option[] = dataBrand.flatMap((brand) =>
+  toOptions(brand)
+);
 
 const robotoFont = Roboto({
   weight: "400",
   display: "swap",
   subsets: ["latin"],
 });
-/*
-const handleOnChangeCategorie = (event: React.ChangeEvent<{}>, value: any) => {
-  if (value) {
-    // Si se seleccionó una opción, aquí puedes acceder a la opción seleccionada con 'value'
-    console.log("Opción seleccionada:", value);
-    console.log("Opción seleccionada:", value.name);
-    // Realizar acciones adicionales según la opción seleccionada
-  } else {
-    // Si no hay una opción seleccionada, aquí puedes acceder al valor ingresado en el campo de entrada
-    const inputValue = value; //event.target.value;
-    console.log("Valor ingresado:", inputValue);
-    // Realizar acciones adicionales según el valor ingresado
-  }
-};
-*/
+
 const Products: React.FC = () => {
   const productsContainerRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -816,12 +684,11 @@ const Products: React.FC = () => {
     }
   };
 
-  const onBrandChange = (
-    event: React.SyntheticEvent<Element, Event>,
-    newValue: { id: string; brand: string } | null
-  ) => {
-    if (newValue) {
-      updateCurrentBrandId(newValue.id);
+  const handleOnChangeBrand = (event: React.ChangeEvent<{}>, value: any) => {
+    if (value) {
+      console.log("value.id " + value.id);
+      console.log("typeof value.id " + typeof value.id);
+      updateCurrentBrandId(String(value.id));
       updateCurrentPage(1);
       updateCategoriesEnable(false);
       updateBrandsEnable(true);
@@ -834,23 +701,7 @@ const Products: React.FC = () => {
       setContainerHeight(productsContainerRef.current.offsetHeight);
     }
   }, [productsContainerRef]);
-  /*
-  useEffect(() => {
-    let productsWork: any[] = [];
-    let productsFiltered;
-    productsFiltered = products.filter(
-      (item) => item.idCategorie === currentCategorieId
-    );
-    productsWork = productsFiltered;
-    setNumOfPages(Math.ceil(productsWork.length / itemsPerPage));
-    setProductsView(
-      productsFiltered.slice(
-        currentPage * itemsPerPage - itemsPerPage,
-        currentPage * itemsPerPage
-      )
-    );
-  }, [currentCategorieId, currentPage]);
-*/
+
   useEffect(() => {
     console.log("products ", products);
     var productsWork: any[] = [];
@@ -867,8 +718,13 @@ const Products: React.FC = () => {
       );*/
     } else if (brandsEnable && currentBrandId !== null) {
       productsFiltered = products.filter(
-        (item) => item.idBrand === currentBrandId
+        (item) =>
+          item.idBrand.substring(0, currentBrandId.length) === currentBrandId
       );
+      /*
+      productsFiltered = products.filter(
+        (item) => item.idBrand === currentBrandId
+      );*/
     } else {
       // Si no hay ninguna categoría o marca habilitada, no se aplica ningún filtro
       productsFiltered = products;
@@ -975,7 +831,7 @@ const Products: React.FC = () => {
               }}
             >
               <Autocomplete
-                options={optionsList}
+                options={optionsListCategories}
                 onChange={handleOnChangeCategorie}
                 getOptionLabel={(option) => option.name}
                 style={{ width: 300, marginTop: "4%", marginRight: "14%" }}
@@ -1047,10 +903,35 @@ const Products: React.FC = () => {
             </Box>
             <Box>
               <Autocomplete
-                onChange={onBrandChange}
-                options={optionsBrands}
-                getOptionLabel={(option) => option.brand}
+                options={optionsListBrands}
+                onChange={handleOnChangeBrand}
+                getOptionLabel={(option) => option.name}
                 style={{ width: 300, marginTop: "4%" }}
+                renderOption={(props, option, { selected, inputValue }) => {
+                  const matches = match(option.name, inputValue);
+                  console.log("matches ", matches);
+                  const parts = parse(option.name, matches);
+                  return (
+                    <li {...props} key={option.id}>
+                      <Checkbox
+                        checked={selected}
+                        sx={{ ml: 2 * option.depth }}
+                      />
+                      <div>
+                        {parts.map((part, index) => (
+                          <span
+                            key={index}
+                            style={{
+                              fontWeight: part.highlight ? 700 : 400,
+                            }}
+                          >
+                            {part.text}
+                          </span>
+                        ))}
+                      </div>
+                    </li>
+                  );
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
