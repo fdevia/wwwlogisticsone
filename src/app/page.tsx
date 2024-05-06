@@ -8,20 +8,28 @@ import { useWindowSize } from "react-use";
 import { ProductContext } from "./ProductContext";
 import { Products } from "./products";
 import "./page.css";
-import { log } from "console";
-//import { AppProps } from "next/app";
 
 const Home: React.FC = () => {
   const { updateProducts, showDesktopGlobo02, updateShowDesktopGlobo02 } =
     useContext(ProductContext);
   const { width, height } = useWindowSize();
-  const [desktopImageLoaded] = useState(true);
-  const [mobileImageLoaded] = useState(true);
-  const [currentWindowWidth, setCurrentWindowWidth] = useState(0);
-  const [currentWindowHeight, setCurrentWindowHeight] = useState(0);
+  const [desktopImageLoaded, setDesktopImageLoaded] = useState(false);
+  const [mobileImageLoaded, setMobileImageLoaded] = useState(false);
+  const [currentWindowWidth, setCurrentWindowWidth] = useState(width);
+  const [currentWindowHeight, setCurrentWindowHeight] = useState(height);
   const [showDesktopGlobo01, setShowDesktopGlobo01] = useState(false);
-  //const [showDesktopGlobo02, setShowDesktopGlobo02] = useState(false);
   const [showDesktopGlobo03, setShowDesktopGlobo03] = useState(false);
+
+  const [imageDesktopDimensions, setImageDesktopDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const [imageMobileDimensions, setImageMobileDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
   const [x1] = useState(700);
   const [y1] = useState(300);
   const [x2] = useState(600);
@@ -75,6 +83,30 @@ const Home: React.FC = () => {
       className: "area-border",
     },
   ];
+
+  const areasMobile = [
+    {
+      id: "area1",
+      coords: "0,3200,2000,3900",
+      onTouchStart: () => {
+        console.log("onTouchStart page03 área1");
+        //setShowPage03Globo01Mobile(true);
+      },
+      onTouchEnd: () => {
+        console.log("onTouchEnd page03 área1");
+        //setShowPage03Globo01Mobile(false);
+      },
+
+      onClick: (
+        e: React.MouseEvent<HTMLDivElement | HTMLAreaElement, MouseEvent>
+      ) => {
+        //console.log("onClick page03 área1");
+        window.location.href = "https://wa.me/message/JUCLGSNQQNWND1";
+      },
+      className: "area-border",
+    },
+  ];
+
   /*
   useEffect(() => {
     const fetchData = async () => {
@@ -93,6 +125,54 @@ const Home: React.FC = () => {
     setCurrentWindowWidth(width);
     setCurrentWindowHeight(height);
   }, [width, height]);
+
+  useEffect(() => {
+    let imgDesktop: HTMLImageElement;
+
+    const handleImageLoadMobile = () => {
+      setDesktopImageLoaded(true);
+      setImageDesktopDimensions({
+        width: imgDesktop.width,
+        height: imgDesktop.height,
+      });
+    };
+
+    imgDesktop = document.createElement("img");
+    imgDesktop.src = "/images/wwwlogisticsone.png";
+    imgDesktop.onload = handleImageLoadMobile;
+    imgDesktop.onerror = () => {
+      console.error("Failed to load image:", "/images/wwwlogisticsone.png");
+    };
+
+    return () => {
+      imgDesktop.onload = null;
+      imgDesktop.onerror = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    let imgMobile: HTMLImageElement;
+
+    const handleImageLoadMobile = () => {
+      setMobileImageLoaded(true);
+      setImageMobileDimensions({
+        width: imgMobile.width,
+        height: imgMobile.height,
+      });
+    };
+
+    imgMobile = document.createElement("img");
+    imgMobile.src = "/images/wwwlogisticsonemobile.png";
+    imgMobile.onload = handleImageLoadMobile;
+    imgMobile.onerror = () => {
+      console.error("Failed to load image:", "/images/wwwlogisticsone.png");
+    };
+
+    return () => {
+      imgMobile.onload = null;
+      imgMobile.onerror = null;
+    };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -152,36 +232,38 @@ const Home: React.FC = () => {
             overflow: "hidden",
           }}
         >
-          <Image
-            alt="wwwlogisticsone"
-            src="/images/wwwlogisticsone.png"
-            //objectFit="cover"
-            width={currentWindowWidth}
-            height={currentWindowHeight}
-            priority
-            useMap="#areas"
-          />
-          <map id="areas">
-            {areas.map((area) => (
-              <area
-                alt="bots"
-                key={area.id}
-                shape="rect"
-                coords={area.coords
-                  .split(",")
-                  .map((coord, index) =>
-                    index % 2 === 0
-                      ? convertWithPixels(parseInt(coord), width)
-                      : convertHeightPixels(parseInt(coord), height)
-                  )
-                  .join(",")}
-                onMouseLeave={area.onMouseLeave}
-                onMouseOver={area.onMouseOver}
-                onClick={area.onClick}
-                className={area.className}
-              />
-            ))}
-          </map>
+          <Box>
+            <Image
+              alt="wwwlogisticsone"
+              src="/images/wwwlogisticsone.png"
+              //objectFit="cover"
+              width={currentWindowWidth}
+              height={currentWindowHeight}
+              priority
+              useMap="#areas"
+            />
+            <map id="areas">
+              {areas.map((area) => (
+                <area
+                  alt="bots"
+                  key={area.id}
+                  shape="rect"
+                  coords={area.coords
+                    .split(",")
+                    .map((coord, index) =>
+                      index % 2 === 0
+                        ? convertWithPixels(parseInt(coord), width)
+                        : convertHeightPixels(parseInt(coord), height)
+                    )
+                    .join(",")}
+                  onMouseLeave={area.onMouseLeave}
+                  onMouseOver={area.onMouseOver}
+                  onClick={area.onClick}
+                  className={area.className}
+                />
+              ))}
+            </map>
+          </Box>
         </Box>
       )}
       {desktopImageLoaded && showDesktopGlobo01 && (
@@ -237,15 +319,40 @@ const Home: React.FC = () => {
             overflow: "hidden",
           }}
         >
-          <Image
-            alt="wwwlogisticsone"
-            src="/images/wwwlogisticsonemobile.png"
-            //objectFit="cover"
-            width={currentWindowWidth}
-            height={currentWindowHeight}
-            style={{ width: "100%", height: "auto" }}
-            priority
-          />
+          <Box>
+            <label>{"currentWindowWidth " + currentWindowWidth}</label>
+            <Image
+              alt="wwwlogisticsone"
+              src="/images/wwwlogisticsonemobile.png"
+              //objectFit="cover"
+              width={currentWindowWidth}
+              height={currentWindowHeight}
+              style={{ width: "100%", height: "auto" }}
+              priority
+              useMap="#areasMobile"
+            />
+            <map id="areasMobile">
+              {areasMobile.map((area) => (
+                <area
+                  alt="bots"
+                  key={area.id}
+                  shape="rect"
+                  coords={area.coords
+                    .split(",")
+                    .map((coord, index) =>
+                      index % 2 === 0
+                        ? convertWithPixels(parseInt(coord), width)
+                        : convertHeightPixels(parseInt(coord), height)
+                    )
+                    .join(",")}
+                  onClick={(e) => area.onClick(e)}
+                  onTouchStart={area.onTouchStart}
+                  onTouchEnd={area.onTouchEnd}
+                  className={area.className}
+                />
+              ))}
+            </map>
+          </Box>
         </Box>
       )}
     </>
