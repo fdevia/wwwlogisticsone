@@ -320,7 +320,6 @@ const Home: React.FC = () => {
           }}
         >
           <Box>
-            <label>{"currentWindowWidth " + currentWindowWidth}</label>
             <Image
               alt="wwwlogisticsone"
               src="/images/wwwlogisticsonemobile.png"
