@@ -6,8 +6,8 @@ import { ProductContextProvider } from "./ProductContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Under Construction www.logisticsone.pe",
-  description: "logisticsone Under Development",
+  title: "logisticsone.pe",
+  description: "wwww logisticsone",
 };
 
 export default function RootLayout({

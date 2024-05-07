@@ -124,6 +124,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     setCurrentWindowWidth(width);
     setCurrentWindowHeight(height);
+    if (width <= 768) {
+      updateShowDesktopGlobo02(false);
+    }
   }, [width, height]);
 
   useEffect(() => {

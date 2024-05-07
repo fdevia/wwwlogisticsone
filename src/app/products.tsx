@@ -769,6 +769,29 @@ const Products: React.FC = () => {
           width: 800,
           height: 800,
           borderRadius: 6,
+          "@media (min-width : 1701px)": { marginLeft: "2%" },
+          "@media (min-width : 1501px) and (max-width : 1700px)": {
+            marginLeft: "4%",
+          },
+          "@media (min-width : 1301px) and (max-width : 1500px)": {
+            marginLeft: "8%",
+          },
+
+          "@media (min-width : 1101px) and (max-width : 1300px)": {
+            marginLeft: "16%",
+          },
+
+          "@media (min-width : 901px) and (max-width : 1100px)": {
+            marginLeft: "24%",
+          },
+
+          "@media (min-width : 769px) and (max-width : 900px)": {
+            marginLeft: "24%",
+          },
+
+          "@media (min-width : 768)": {
+            marginLeft: "16%",
+          },
           //border: "solid white 10px",
           //backgroundColor: "#F0324C",
           backgroundColor: "#2F3042",
