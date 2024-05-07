@@ -996,7 +996,7 @@ const Products: React.FC = () => {
           <Box
             ref={productsContainerRef}
             sx={{
-              marginTop: "2%",
+              marginTop: "4%",
               minHeight: "550px",
             }}
           >
@@ -1004,10 +1004,12 @@ const Products: React.FC = () => {
               <Box
                 key={index}
                 sx={{
+                  marginTop: "2%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
+                  //border: "10px solid white",
                 }}
               >
                 <Box

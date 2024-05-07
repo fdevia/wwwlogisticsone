@@ -6,7 +6,7 @@ import { ProductContextProvider } from "./ProductContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "logisticsone.pe",
+  title: "logisticsone",
   description: "wwww logisticsone",
 };
 
