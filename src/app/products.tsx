@@ -668,6 +668,13 @@ const Products: React.FC = () => {
   //var productsWork: any[] = [];
   //var productsFiltered;
 
+  const miVariableMediaQuery1 = 0.38;
+  const miVariableMediaQuery2 = 0.38;
+  const miVariableMediaQuery3 = 0.36;
+  const miVariableMediaQuery4 = 0.34;
+  const miVariableMediaQuery5 = 0.32;
+  const miVariableMediaQuery6 = 0.3;
+
   const handleCloseProductos = () => updateShowDesktopGlobo02(false);
 
   const handleOnChangeCategorie = (
@@ -766,33 +773,49 @@ const Products: React.FC = () => {
           transform: "translate(-50%, -50%)",
           left: convertXPixels(width, x2),
           top: convertYPixels(height, y2),
-          width: 800,
-          height: 800,
           borderRadius: 6,
-          "@media (min-width : 1701px)": { marginLeft: "2%" },
+          "@media (min-width : 1701px)": {
+            marginLeft: "28%",
+            width: 1000,
+            height: 820,
+          },
           "@media (min-width : 1501px) and (max-width : 1700px)": {
-            marginLeft: "4%",
+            marginLeft: "24%",
+            width: 900,
+            height: 810,
           },
           "@media (min-width : 1301px) and (max-width : 1500px)": {
-            marginLeft: "8%",
+            marginTop: "1%",
+            marginLeft: "24%",
+            width: 800,
+            height: 760,
           },
 
           "@media (min-width : 1101px) and (max-width : 1300px)": {
-            marginLeft: "16%",
+            marginTop: "1%",
+            marginLeft: "25%",
+            width: 800,
+            height: 760,
           },
 
           "@media (min-width : 901px) and (max-width : 1100px)": {
-            marginLeft: "24%",
+            marginTop: "1%",
+            marginLeft: "25%",
+            width: 700,
+            height: 740,
           },
 
           "@media (min-width : 769px) and (max-width : 900px)": {
-            marginLeft: "24%",
+            marginLeft: "26%",
+            width: 700,
+            height: 740,
           },
-
+          /*
           "@media (min-width : 768)": {
             marginLeft: "16%",
           },
-          //border: "solid white 10px",
+          */
+          //border: "solid blue 10px",
           //backgroundColor: "#F0324C",
           backgroundColor: "#2F3042",
           //backgroundColor: "gray",
@@ -822,7 +845,7 @@ const Products: React.FC = () => {
                 width={50}
                 height={50}
                 className="imgX"
-                src={"/images/x.png"}
+                src={"/images/x2.png"}
                 alt="x"
               />
             </Button>
@@ -996,8 +1019,44 @@ const Products: React.FC = () => {
           <Box
             ref={productsContainerRef}
             sx={{
-              marginTop: "4%",
-              minHeight: "550px",
+              "@media (min-width : 1701px)": {
+                marginTop: "4%",
+                marginBottom: "2%",
+                minHeight: "500px",
+                //border: "10px solid red",
+              },
+              "@media (min-width : 1501px) and (max-width : 1700px)": {
+                marginTop: "2%",
+                marginBottom: "1%",
+                minHeight: "450px",
+                //border: "10px solid white",
+              },
+              "@media (min-width : 1301px) and (max-width : 1500px)": {
+                marginTop: "2%",
+                marginBottom: "1%",
+                minHeight: "440px",
+                //border: "10px solid red",
+              },
+
+              "@media (min-width : 1101px) and (max-width : 1300px)": {
+                marginTop: "2%",
+                minHeight: "330px",
+                //border: "10px solid white",
+              },
+
+              "@media (min-width : 901px) and (max-width : 1100px)": {
+                marginTop: "2%",
+                marginBottom: "1%",
+                minHeight: "400px",
+                //border: "10px solid red",
+              },
+
+              "@media (min-width : 769px) and (max-width : 900px)": {
+                marginTop: "2%",
+                marginBottom: "1%",
+                minHeight: "300px",
+                //border: "10px solid white",
+              },
             }}
           >
             {productsView.map((item, index) => (
@@ -1009,7 +1068,7 @@ const Products: React.FC = () => {
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  //border: "10px solid white",
+                  //border: "10px solid blue",
                 }}
               >
                 <Box
@@ -1018,14 +1077,51 @@ const Products: React.FC = () => {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    width: "30%",
-                    height: "30%",
+                    "@media (min-width : 1501px) and (max-width : 1700px)": {
+                      width: "20%",
+                      height: "5%",
+                      //border: "10px solid white",
+                    },
                   }}
                 >
                   <Image
                     alt="skupng"
-                    width={containerWidth * 0.38} // Calcular el ancho relativo
-                    height={containerHeight * 0.38} // Calcular la altura relativa
+                    width={
+                      containerWidth *
+                      (window.innerWidth > 1701
+                        ? miVariableMediaQuery1
+                        : window.innerWidth >= 1501 && window.innerWidth <= 1700
+                        ? miVariableMediaQuery2
+                        : window.innerWidth >= 1301 && window.innerWidth <= 1500
+                        ? miVariableMediaQuery3
+                        : window.innerWidth >= 1101 && window.innerWidth <= 1300
+                        ? miVariableMediaQuery4
+                        : window.innerWidth >= 901 && window.innerWidth <= 1100
+                        ? miVariableMediaQuery5
+                        : window.innerWidth >= 769 && window.innerWidth <= 900
+                        ? miVariableMediaQuery6
+                        : miVariableMediaQuery1)
+                    } // Calcular el ancho relativo
+                    height={
+                      containerHeight *
+                      (window.innerHeight > 1701
+                        ? miVariableMediaQuery1
+                        : window.innerHeight >= 1501 &&
+                          window.innerHeight <= 1700
+                        ? miVariableMediaQuery2
+                        : window.innerHeight >= 1301 &&
+                          window.innerHeight <= 1500
+                        ? miVariableMediaQuery3
+                        : window.innerHeight >= 1101 &&
+                          window.innerHeight <= 1300
+                        ? miVariableMediaQuery4
+                        : window.innerHeight >= 901 &&
+                          window.innerHeight <= 1100
+                        ? miVariableMediaQuery5
+                        : window.innerHeight >= 769 && window.innerHeight <= 900
+                        ? miVariableMediaQuery6
+                        : miVariableMediaQuery1)
+                    } // Calcular la altura relativa
                     src={`/images/${item.sku}.png`}
                   />
                 </Box>
