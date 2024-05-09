@@ -808,7 +808,7 @@ const Products: React.FC = () => {
           "@media (min-width : 769px) and (max-width : 900px)": {
             marginLeft: "26%",
             width: 700,
-            height: 740,
+            height: 640,
           },
           /*
           "@media (min-width : 768)": {
