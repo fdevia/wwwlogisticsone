@@ -101,7 +101,7 @@ const Home: React.FC = () => {
         e: React.MouseEvent<HTMLDivElement | HTMLAreaElement, MouseEvent>
       ) => {
         //console.log("onClick page03 área1");
-        window.location.href = "https://wa.me/message/JUCLGSNQQNWND1";
+        window.location.href = "https://wa.me/message/5CUV52KETKTPD1";
       },
       className: "area-border",
     },
