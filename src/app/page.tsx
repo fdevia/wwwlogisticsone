@@ -78,7 +78,7 @@ const Home: React.FC = () => {
       },
       onClick: () => {
         console.log("onClick area3");
-        window.location.href = "https://wa.me/message/JUCLGSNQQNWND1";
+        window.location.href = "https://wa.me/message/5CUV52KETKTPD1";
       },
       className: "area-border",
     },
